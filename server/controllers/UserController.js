@@ -68,7 +68,7 @@ async function loginUser(req, res) {
       { expiresIn: "30d" }
     );
 
-    res.cookie("mywatchlist-token", token, {
+    res.cookie("mywatchlisttoken", token, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
       secure: true,
@@ -90,4 +90,38 @@ async function loginUser(req, res) {
   }
 }
 
-export { registerUser, loginUser };
+async function logoutUser(req, res) {
+  try {
+    res.clearCookie("mywatchlisttoken");
+    return res
+      .status(200)
+      .json({ message: "Logout successful", success: true });
+  } catch (error) {
+    console.error("Error while logging out user", error);
+    return res
+      .status(500)
+      .json({ message: "Error while logging out user", error, success: false });
+  }
+}
+
+async function getUser(req, res) {
+  const id = req.id;
+  try {
+    const user = await UserModel.findById(id).select("-password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "User not found!", success: false });
+    }
+    return res
+      .status(200)
+      .json({ message: "User fetched successfully", success: true, user });
+  } catch (error) {
+    console.error("Error while finding user", error);
+    return res
+      .status(500)
+      .json({ message: "Error while finding user", error, success: false });
+  }
+}
+
+export { registerUser, loginUser, logoutUser, getUser };
