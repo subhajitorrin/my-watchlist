@@ -17,10 +17,9 @@ const VideoSchema = mongoose.Schema(
     ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
+      ref: "User"
     },
-    duraiton: {
+    duration: {
       type: Number,
       required: true
     },
