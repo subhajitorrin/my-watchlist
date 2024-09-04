@@ -8,9 +8,9 @@ const BASE_URL = `${import.meta.env.VITE_BASE_URL}`
 export const useUser = create((set,get)=>({
     user:null,
     isLoading:false,
-    googleLogin:async (code)=>{
+    registerUser:async (email,password)=>{
         try {
-            const res = await axios.post(`${BASE_URL}/google-login`,code);
+            const res = await axios.post(`${BASE_URL}/register-user`,{email,password});
             console.log(res);
         } catch (error) {
             throw error;
