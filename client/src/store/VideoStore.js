@@ -92,5 +92,23 @@ export const useVideo = create((set, get) => ({
       "0"
     )}:${minutes} ${period}`;
     return formattedTime;
+  },
+  deleteVideo:async(id)=>{
+    try {
+      const res = await axios.put(`${BASE_URL}/delete-video/${id}`)
+      const libraryFromSession = get().getLibraryFromSession();
+      if(libraryFromSession){
+        const updatedSession = libraryFromSession.filter((item)=>item._id!==id)
+        set({library:updatedSession})
+        sessionStorage.setItem("library", JSON.stringify(updatedSession));
+      }else{
+        const tempLibrary = get().library;
+        const updatedSession = tempLibrary.filter((item)=>item._id!==id)
+        set({library:updatedSession})
+        sessionStorage.setItem("library", JSON.stringify(updatedSession));
+      }
+    } catch (error) {
+      throw error
+    }
   }
 }));

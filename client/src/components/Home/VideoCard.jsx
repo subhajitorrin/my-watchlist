@@ -3,9 +3,11 @@ import { MdOutlineDelete } from "react-icons/md";
 import { useVideo } from "../../store/VideoStore";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 function VideoCard({ item }) {
-  const { formatTime, getISTdate,getISTtime } = useVideo();
+  const [deleteLoad, setDeleteLoad] = useState(false);
+  const { formatTime, getISTdate, getISTtime, deleteVideo } = useVideo();
 
   const copyToClipboard = async () => {
     try {
@@ -15,6 +17,18 @@ function VideoCard({ item }) {
       console.error("Failed to copy text: ", err);
     }
   };
+
+  async function handleDeleteVideo() {
+    setDeleteLoad(true);
+    try {
+      await deleteVideo(item._id);
+      toast.success("Video deleted");
+    } catch (error) {
+      toast.warn(error.response?.data?.message || error.message);
+    } finally {
+      setDeleteLoad(false);
+    }
+  }
 
   return (
     <div className=" flex gap-[10px] rounded-[7px] h-[150px] w-full bg-[#111827] p-[10px]">
@@ -39,7 +53,8 @@ function VideoCard({ item }) {
           <div className="flex gap-[10px]">
             <p className="text-[13px] ">{formatTime(item.duration)}</p>
             <p className="text-[13px] text-[#ffffff96]">
-              Added {getISTdate(item.createdAt)}, <span>{getISTtime(item.createdAt)}</span>
+              Added {getISTdate(item.createdAt)},{" "}
+              <span>{getISTtime(item.createdAt)}</span>
               {/* Added 05-09-2024, <span></span> */}
             </p>
           </div>
@@ -51,8 +66,12 @@ function VideoCard({ item }) {
           <button className="bg-[#4ca8af] font-[500] hover:bg-[#3a8186] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]">
             Reminder
           </button>
-          <button className="bg-[#f44336] font-[500] hover:bg-[#b42828] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]">
-            Delete
+          <button
+            onClick={handleDeleteVideo}
+            style={{ pointerEvents: deleteLoad ? "none" : "auto" }}
+            className="bg-[#f44336] font-[500] hover:bg-[#b42828] transition-all ease-linear duration-200 py-[2px] w-[60px] rounded-[4px] text-[12px]"
+          >
+            {deleteLoad ? <BeatLoader color="#ffffff" size={5} /> : "Delete"}
           </button>
           <div className="">
             {/* <MdContentCopy

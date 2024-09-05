@@ -76,4 +76,43 @@ async function getLibrary(req, res) {
   }
 }
 
-export { addVideoToLibrary, getLibrary };
+async function deleteVideo(req, res) {
+  const { id } = req.params;
+  const userid = req.id;
+
+  try {
+    const video = await VideoModel.findById(id);
+    if (!video) {
+      return res
+        .status(400)
+        .json({ message: "Video not found!", success: false });
+    }
+
+    const user = await UserModel.findById(userid);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "User not found!", success: false });
+    }
+
+    if (!user.videos.includes(video._id)) {
+      return res
+        .status(400)
+        .json({ message: "Video not in your library!", success: false });
+    }
+
+    user.videos.pull(video._id);
+
+    await user.save();
+    await VideoModel.findByIdAndDelete(id);
+
+    return res.status(200).json({ message: "Video removed", success: true });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while deleting video!", success: false });
+  }
+}
+
+export { addVideoToLibrary, getLibrary, deleteVideo };
