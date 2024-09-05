@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QueueCard from "./QueueCard";
 import { useVideo } from "../../store/VideoStore";
 
 function QueueRight() {
-  const { library } = useVideo();
+  const { queue, getQueue } = useVideo();
   const [queueList, setQueueList] = useState(
     Array.from({ length: 20 }).fill("")
   );
+
+  useEffect(() => {
+    getQueue();
+  }, []);
+
   return (
     <div className="h-full w-[25%] flex flex-col gap-[10px]">
       <h2 className="text-[20px] font-[500]">Current Queue</h2>
       <div className="h-[94.8%] overflow-y-auto scrollNone flex flex-col gap-[10px]">
-        {queueList.map((item, index) => {
+        {queue.map((item, index) => {
           return <QueueCard key={index} item={item} />;
         })}
       </div>

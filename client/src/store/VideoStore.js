@@ -120,7 +120,7 @@ export const useVideo = create((set, get) => ({
   },
   addVideoToQueue: async (videoId) => {
     try {
-      
+
       const res = await axios.post(`${BASE_URL}/add-to-queue`, { videoId });
       const video = res.data.video;
 
@@ -136,5 +136,23 @@ export const useVideo = create((set, get) => ({
     } catch (error) {
       throw error;
     }
-  }
+  },
+  getQueue: async () => {
+    set({ isLoading: true });
+    try {
+      const queueFromSession = get().getQueueFromSession();
+      if (queueFromSession !== null) {
+        set({ queue: queueFromSession });
+      } else {
+        const res = await axios.get(`${BASE_URL}/get-queue`);
+        const que = res.data.queue;
+        set({ queue: que });
+        sessionStorage.setItem("queue", JSON.stringify(que));
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));

@@ -77,6 +77,7 @@ export const useUser = create((set, get) => ({
       clearLibrary();
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('library');
+      sessionStorage.removeItem('queue');
     } catch (error) {
       throw error
     } finally {

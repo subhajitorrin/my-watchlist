@@ -145,4 +145,29 @@ async function addToQueue(req, res) {
   }
 }
 
-export { addVideoToLibrary, getLibrary, deleteVideo, addToQueue };
+async function getQueue(req, res) {
+  const userid = req.id;
+  try {
+    let queue = await UserModel.findById(userid).select("queue").populate({
+      path: "queue",
+      model: VideoModel
+    });
+    if (!queue) {
+      return res
+        .status(400)
+        .json({ message: "Queue not found!", success: false });
+    }
+    return res.status(200).json({
+      message: "Queue fetched",
+      success: true,
+      queue: queue.queue.length > 0 ? queue.queue : []
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while getting queue", success: false });
+  }
+}
+
+export { addVideoToLibrary, getLibrary, deleteVideo, addToQueue, getQueue };
