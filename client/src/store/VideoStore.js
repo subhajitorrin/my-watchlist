@@ -8,6 +8,7 @@ axios.defaults.withCredentials = true;
 
 export const useVideo = create((set, get) => ({
   library: [],
+  queue: [],
   isLoading: false,
   addVideoToLibrary: async (url) => {
     set({ isLoading: true });
@@ -73,6 +74,10 @@ export const useVideo = create((set, get) => ({
     const storedData = sessionStorage.getItem("library");
     return storedData ? JSON.parse(storedData) : null;
   },
+  getQueueFromSession: () => {
+    const storedData = sessionStorage.getItem("queue");
+    return storedData ? JSON.parse(storedData) : null;
+  },
   getISTdate: (utc) => {
     const date = new Date(utc);
     const day = String(date.getDate()).padStart(2, "0");
@@ -93,30 +98,43 @@ export const useVideo = create((set, get) => ({
     )}:${minutes} ${period}`;
     return formattedTime;
   },
-  deleteVideo:async(id)=>{
+  deleteVideo: async (id) => {
     try {
-      const res = await axios.put(`${BASE_URL}/delete-video/${id}`)
+      const res = await axios.put(`${BASE_URL}/delete-video/${id}`);
       const libraryFromSession = get().getLibraryFromSession();
-      if(libraryFromSession){
-        const updatedSession = libraryFromSession.filter((item)=>item._id!==id)
-        set({library:updatedSession})
+      if (libraryFromSession) {
+        const updatedSession = libraryFromSession.filter(
+          (item) => item._id !== id
+        );
+        set({ library: updatedSession });
         sessionStorage.setItem("library", JSON.stringify(updatedSession));
-      }else{
+      } else {
         const tempLibrary = get().library;
-        const updatedSession = tempLibrary.filter((item)=>item._id!==id)
-        set({library:updatedSession})
+        const updatedSession = tempLibrary.filter((item) => item._id !== id);
+        set({ library: updatedSession });
         sessionStorage.setItem("library", JSON.stringify(updatedSession));
       }
     } catch (error) {
-      throw error
+      throw error;
     }
   },
-  addVideoToQueue:async(videoId)=>{
+  addVideoToQueue: async (videoId) => {
     try {
-      const res = await axios.post(`${BASE_URL}/add-to-queue`,{videoId})
-      console.log(res);
+      
+      const res = await axios.post(`${BASE_URL}/add-to-queue`, { videoId });
+      const video = res.data.video;
+
+      const tempLibrary = get().library.filter((item) => item._id !== videoId);
+      set({ library: tempLibrary });
+      sessionStorage.setItem("library", JSON.stringify(tempLibrary));
+
+      const tempQueue = get().queue;
+      const updatedQueue = [...tempQueue,video]
+      set({queue:updatedQueue})
+      sessionStorage.setItem("queue", JSON.stringify(updatedQueue));
+
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }));
