@@ -19,8 +19,8 @@ async function addVideoToLibrary(req, res) {
     const videoId = getVideoId(url);
     if (!videoId) throw new Error("Invalid YouTube Video Id");
 
-    const isPresent = await VideoModel.findOne({ videoId, user: userid });
-    if (isPresent) {
+    const videoRes = await VideoModel.findOne({ videoId, user: userid });
+    if (videoRes) {
       return res
         .status(400)
         .json({ message: "Already present!", success: false });
