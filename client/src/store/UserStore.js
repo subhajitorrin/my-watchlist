@@ -11,6 +11,7 @@ export const useUser = create((set, get) => ({
   isLoading: false,
   isAuthenticated: false,
   isAuthChecking: true,
+  library: [],
   registerUser: async (name, email, password) => {
     set({ isLoading: true });
     try {
@@ -31,7 +32,11 @@ export const useUser = create((set, get) => ({
     try {
       const res = await axios.post(`${BASE_URL}/login`, { email, password });
       console.log(res);
-      const user = res.data.user;
+      const user = {
+        name: res.data.user.name,
+        email: res.data.user.email,
+        id: res.data.user._id
+      };
       set({ isAuthenticated: true, user });
       sessionStorage.setItem("user", JSON.stringify(user));
     } catch (error) {
@@ -48,7 +53,11 @@ export const useUser = create((set, get) => ({
         set({ isAuthenticated: true, user });
       } else {
         const res = await axios.get(`${BASE_URL}/getuser`);
-        const user = res.data.user;
+        const user = {
+          name: res.data.user.name,
+          email: res.data.user.email,
+          id: res.data.user._id
+        };
         set({ isAuthenticated: true, user });
         sessionStorage.setItem("user", JSON.stringify(user));
       }
@@ -58,17 +67,43 @@ export const useUser = create((set, get) => ({
       set({ isAuthChecking: false });
     }
   },
-  logout:async ()=>{
+  logout: async () => {
+    set({ isLoading: true })
+    try {
+      const res = await axios.post(`${BASE_URL}/logout`)
+      console.log(res);
+      set({ user: null, isAuthenticated: false })
+      sessionStorage.removeItem('user');
+    } catch (error) {
+      throw error
+    } finally {
+      set({ isLoading: false })
+    }
+  },
+}));
+
+export const useVideo = create((set, get) => ({
+  library: [],
+  isLoading: false,
+  addVideoToLibrary:async (url)=>{
     set({isLoading:true})
     try {
-        const res = await axios.post(`${BASE_URL}/logout`)
-        console.log(res);
-        set({user:null,isAuthenticated: false})
-        sessionStorage.removeItem('user');
+      const res = await axios.post(`${BASE_URL}/add-video-to-library`,{url})
+      console.log(res);
     } catch (error) {
-        throw error
+      throw error
     }finally{
-        set({isLoading:false})
+      set({isLoading:false})
+    }
+  },
+  getLibrary: async () => {
+    set({ isLoading: true })
+    try {
+      const res = await axios.get(`${BASE_URL}/add-video-to-library`)
+    } catch (error) {
+      throw error;
+    }finally{
+      set({ isLoading: false })
     }
   }
-}));
+}))

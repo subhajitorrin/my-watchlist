@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const VideoSchema = mongoose.Schema(
   {
+    videoId: {
+      type: String,
+      required: true,
+      unique: true
+    },
     title: {
       type: String,
       required: true
@@ -15,6 +20,9 @@ const VideoSchema = mongoose.Schema(
         type: String
       }
     ],
+    thumbnail: {
+      type: String
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
@@ -24,7 +32,8 @@ const VideoSchema = mongoose.Schema(
       required: true
     },
     playback: {
-      type: Number
+      type: Number,
+      default: 0
     }
   },
   { timestamps: true }

@@ -9,11 +9,6 @@ import { BeatLoader } from "react-spinners";
 function Navbar() {
   const { logout, isLoading, user } = useUser();
 
-  useEffect(()=>{
-    console.log(user);
-    
-  },[user])
-
   async function handleLogout() {
     try {
       await logout();

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VideoCard from "./VideoCard";
 
 function HomeLeft() {
   const [myList, setMyList] = useState(Array.from({ length: 10 }).fill(""));
+
+  useEffect(()=>{
+
+  },[])
   return (
     <div className="h-full w-[50%] gap-[10px] flex flex-col">
       <h2 className="text-[20px] font-[500]">My Library</h2>

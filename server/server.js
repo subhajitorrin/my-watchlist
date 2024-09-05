@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import UserRouter from "./routers/UserRouter.js";
+import VideoRouter from "./routers/VideoRouter.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(
 );
 
 app.use("/", UserRouter);
+app.use("/", VideoRouter);
 
 mongoose
   .connect(MONGOURL)
