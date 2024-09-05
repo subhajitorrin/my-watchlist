@@ -3,7 +3,7 @@ import { FaRegUser } from "react-icons/fa";
 
 function Navbar() {
   return (
-    <nav className="flex items-center justify-between py-[15px] px-[3%] text-white border-b border-[#ffffff41]">
+    <nav className="flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
       {/* Left Side: Logo and Title */}
       <div className="flex items-center space-x-2">
         {/* <img src="your-logo.png" alt="Logo" className="w-10 h-10" /> */}
@@ -25,7 +25,7 @@ function Navbar() {
           <span className="font-semibold">Subhajit Ghosh</span>
           <FaRegUser />
         </div>
-        <button className="bg-[#7e22ce] py-[5px] px-[10px] rounded-[5px]">
+        <button className="bg-[#7e22ce] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[5px] px-[10px] rounded-[5px]">
           Logout
         </button>
       </div>
