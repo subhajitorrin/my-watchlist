@@ -13,7 +13,16 @@ export const useVideo = create((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await axios.post(`${BASE_URL}/add-video-to-library`, { url });
-      console.log(res);
+      set((prev) => ({
+        library: [res.data.video, ...prev.library]
+      }));
+      const libraryFromSession = get().getLibraryFromSession();
+      if(libraryFromSession!==null){
+        const updatedSession = [res.data.video,...libraryFromSession]
+        sessionStorage.setItem("library", JSON.stringify(updatedSession));
+      }else{
+        sessionStorage.setItem("library", JSON.stringify(res.data.video));
+      }
     } catch (error) {
       throw error;
     } finally {
@@ -23,10 +32,9 @@ export const useVideo = create((set, get) => ({
   getLibrary: async () => {
     set({ isLoading: true });
     try {
-      const storedData = sessionStorage.getItem("library");
-      const tempLib = storedData ? JSON.parse(storedData) : null;
-      if (tempLib !== null) {
-        set({ library: tempLib });
+      const libraryFromSession = get().getLibraryFromSession();
+      if (libraryFromSession!==null) {
+        set({ library: libraryFromSession });
       } else {
         const res = await axios.get(`${BASE_URL}/get-library`);
         const lib = res.data.library;
@@ -60,5 +68,9 @@ export const useVideo = create((set, get) => ({
   },
   clearLibrary: () => {
     set({ library: [] });
+  },
+  getLibraryFromSession:()=>{
+    const storedData = sessionStorage.getItem("library");
+    return storedData ? JSON.parse(storedData) : null;
   }
 }));

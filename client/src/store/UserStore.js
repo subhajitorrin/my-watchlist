@@ -32,7 +32,6 @@ export const useUser = create((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await axios.post(`${BASE_URL}/login`, { email, password });
-      console.log(res);
       const user = {
         name: res.data.user.name,
         email: res.data.user.email,
