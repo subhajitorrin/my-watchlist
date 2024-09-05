@@ -171,13 +171,14 @@ async function getQueue(req, res) {
 }
 
 async function removeFromQueue(req, res) {
-  const { videId } = req.body;
+  const { videoId } = req.body;
   const userid = req.id;
+  
   try {
-    const video = await VideoModel.findById(videId);
+    const video = await VideoModel.findById(videoId);
     if (!video) {
       return res
-        .status(200)
+        .status(400)
         .json({ message: "Video not found!", success: false });
     }
     const user = await UserModel.findById(userid);
@@ -187,7 +188,7 @@ async function removeFromQueue(req, res) {
         .json({ message: "User not found!", success: false });
     }
 
-    if (!user.queue.includes(videId)) {
+    if (!user.queue.includes(videoId)) {
       return res
         .status(400)
         .json({ message: "Video not in your queue!", success: false });
@@ -196,7 +197,7 @@ async function removeFromQueue(req, res) {
     user.queue.pull(videoId);
 
     await user.save();
-    await VideoModel.findByIdAndDelete(id);
+    await VideoModel.findByIdAndDelete(videoId);
 
     return res.status(200).json({ message: "Video removed", success: true });
   } catch (error) {

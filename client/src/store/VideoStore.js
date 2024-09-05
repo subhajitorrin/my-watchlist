@@ -10,7 +10,7 @@ export const useVideo = create((set, get) => ({
   library: [],
   queue: [],
   isLoading: false,
-  currnetVideo:null,
+  currnetVideo: null,
   addVideoToLibrary: async (url) => {
     set({ isLoading: true });
     try {
@@ -121,7 +121,6 @@ export const useVideo = create((set, get) => ({
   },
   addVideoToQueue: async (videoId) => {
     try {
-
       const res = await axios.post(`${BASE_URL}/add-to-queue`, { videoId });
       const video = res.data.video;
 
@@ -130,12 +129,11 @@ export const useVideo = create((set, get) => ({
       sessionStorage.setItem("library", JSON.stringify(tempLibrary));
 
       const tempQueue = get().queue;
-      const updatedQueue = [...tempQueue,video]
-      set({queue:updatedQueue})
+      const updatedQueue = [...tempQueue, video];
+      set({ queue: updatedQueue });
       sessionStorage.setItem("queue", JSON.stringify(updatedQueue));
 
-      set({currnetVideo:updatedQueue[0]})
-
+      set({ currnetVideo: updatedQueue[0] });
     } catch (error) {
       throw error;
     }
@@ -145,11 +143,14 @@ export const useVideo = create((set, get) => ({
     try {
       const queueFromSession = get().getQueueFromSession();
       if (queueFromSession !== null) {
-        set({ queue: queueFromSession,currnetVideo:queueFromSession[0] });
+        set({
+          queue: queueFromSession,
+          currnetVideo: queueFromSession.length > 0 ? queueFromSession[0] : null
+        });
       } else {
         const res = await axios.get(`${BASE_URL}/get-queue`);
         const que = res.data.queue;
-        set({ queue: que,currnetVideo:que[0] });
+        set({ queue: que, currnetVideo: que.length > 0 ? que[0] : null });
         sessionStorage.setItem("queue", JSON.stringify(que));
       }
     } catch (error) {
@@ -158,15 +159,20 @@ export const useVideo = create((set, get) => ({
       set({ isLoading: false });
     }
   },
-  removeVideoFromQueue:async(videoId)=>{
-    set({isLoading:true})
+  removeVideoFromQueue: async (videoId) => {
+    set({ isLoading: true });
     try {
-      const res = await axios.put(`${BASE_URL}/remove-from-queue`,{videoId});
-      console.log(res);
+      const res = await axios.put(`${BASE_URL}/remove-from-queue`, { videoId });
+      const tempQueue = get().queue.filter((item) => item._id !== videoId);
+      set({
+        queue: tempQueue,
+        currnetVideo: tempQueue.length > 0 ? tempQueue[0] : null
+      });
+      sessionStorage.setItem("queue", JSON.stringify(tempQueue));
     } catch (error) {
-      throw error
-    }finally{
-      set({isLoading:false})
+      throw error;
+    } finally {
+      set({ isLoading: false });
     }
   }
 }));

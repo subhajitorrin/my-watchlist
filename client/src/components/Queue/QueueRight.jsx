@@ -4,11 +4,6 @@ import { useVideo } from "../../store/VideoStore";
 
 function QueueRight() {
   const { queue, getQueue } = useVideo();
-  const [queueList, setQueueList] = useState(
-    Array.from({ length: 20 }).fill("")
-  );
-
-
 
   return (
     <div className="h-full w-[25%] flex flex-col gap-[10px]">
