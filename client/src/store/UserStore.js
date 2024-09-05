@@ -16,5 +16,4 @@ export const useUser = create((set,get)=>({
             throw error;
         }
     }
-
 }))
