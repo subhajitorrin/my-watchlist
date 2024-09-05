@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import { useVideo } from "../../store/VideoStore";
+import { MdContentCopy } from "react-icons/md";
+import { toast } from "react-toastify";
 
 function VideoCard({ item }) {
-  const { formatTime } = useVideo();
+  const { formatTime, getISTdate,getISTtime } = useVideo();
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(item.url);
+      toast.success("Link copied");
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
   return (
     <div className=" flex gap-[10px] rounded-[7px] h-[150px] w-full bg-[#111827] p-[10px]">
       <div className="h-full w-[35%]">
@@ -27,7 +39,8 @@ function VideoCard({ item }) {
           <div className="flex gap-[10px]">
             <p className="text-[13px] ">{formatTime(item.duration)}</p>
             <p className="text-[13px] text-[#ffffff96]">
-              Added 05-09-2024, <span></span>
+              Added {getISTdate(item.createdAt)}, <span>{getISTtime(item.createdAt)}</span>
+              {/* Added 05-09-2024, <span></span> */}
             </p>
           </div>
         </div>
@@ -41,6 +54,12 @@ function VideoCard({ item }) {
           <button className="bg-[#f44336] font-[500] hover:bg-[#b42828] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]">
             Delete
           </button>
+          <div className="">
+            {/* <MdContentCopy
+              onClick={copyToClipboard}
+              className="text-[15px] cursor-pointer"
+            /> */}
+          </div>
         </div>
       </div>
     </div>

@@ -17,10 +17,10 @@ export const useVideo = create((set, get) => ({
         library: [res.data.video, ...prev.library]
       }));
       const libraryFromSession = get().getLibraryFromSession();
-      if(libraryFromSession!==null){
-        const updatedSession = [res.data.video,...libraryFromSession]
+      if (libraryFromSession !== null) {
+        const updatedSession = [res.data.video, ...libraryFromSession];
         sessionStorage.setItem("library", JSON.stringify(updatedSession));
-      }else{
+      } else {
         sessionStorage.setItem("library", JSON.stringify(res.data.video));
       }
     } catch (error) {
@@ -33,7 +33,7 @@ export const useVideo = create((set, get) => ({
     set({ isLoading: true });
     try {
       const libraryFromSession = get().getLibraryFromSession();
-      if (libraryFromSession!==null) {
+      if (libraryFromSession !== null) {
         set({ library: libraryFromSession });
       } else {
         const res = await axios.get(`${BASE_URL}/get-library`);
@@ -69,8 +69,28 @@ export const useVideo = create((set, get) => ({
   clearLibrary: () => {
     set({ library: [] });
   },
-  getLibraryFromSession:()=>{
+  getLibraryFromSession: () => {
     const storedData = sessionStorage.getItem("library");
     return storedData ? JSON.parse(storedData) : null;
+  },
+  getISTdate: (utc) => {
+    const date = new Date(utc);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  },
+  getISTtime: (utc) => {
+    const date = new Date(utc);
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const period = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    const formattedTime = `${String(hours).padStart(
+      2,
+      "0"
+    )}:${minutes} ${period}`;
+    return formattedTime;
   }
 }));
