@@ -54,9 +54,10 @@ async function addVideoToLibrary(req, res) {
 async function getLibrary(req, res) {
   const userid = req.id;
   try {
-    let library = await UserModel.findById(userid)
-      .select("videos")
-      .populate("videos");
+    let library = await UserModel.findById(userid).select("videos").populate({
+      path: "videos",
+      options: { sort: { createdAt: -1 } }
+    });
     if (!library) {
       return res
         .status(400)
