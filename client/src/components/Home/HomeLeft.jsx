@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import VideoCard from "./VideoCard";
 import { useVideo } from "../../store/VideoStore";
 
 function HomeLeft() {
-  const [myList, setMyList] = useState(Array.from({ length: 10 }).fill(""));
-  const { getLibrary, library } = useVideo();
-
-  useEffect(() => {
-    getLibrary();
-  }, []);
-
+  const {  library } = useVideo();
   return (
     <div className="h-full w-[50%] gap-[10px] flex flex-col">
       <h2 className="text-[20px] font-[500]">My Library</h2>

@@ -8,6 +8,7 @@ import Login from "./components/Authentication/Login";
 import Home from "./components/Home/Home";
 import Register from "./components/Authentication/Register";
 import Queue from "./components/Queue/Queue.jsx";
+import { useVideo } from "./store/VideoStore.js";
 
 function ProtectUnauthenticatedRoutes({ children }) {
   const { isAuthenticated } = useUser();
@@ -26,11 +27,24 @@ function ProtectAuthenticatedRoutes({ children }) {
 }
 
 function App() {
-  const { isAuthChecking, getUser } = useUser();
+  const { isAuthChecking, getUser, user } = useUser();
+  const { getQueue, getLibrary } = useVideo();
 
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      getQueue();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      getLibrary();
+    }
+  }, [user]);
 
   if (isAuthChecking) return <div className="h-screen bg-[#0a0a0a]"></div>;
 

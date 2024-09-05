@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeLeft from "./HomeLeft";
 import HomeRight from "./HomeRight";
 import Navbar from "../Navbar";
+import { useVideo } from "../../store/VideoStore";
 
 function Home() {
   return (

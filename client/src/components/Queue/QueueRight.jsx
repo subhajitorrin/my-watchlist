@@ -8,9 +8,7 @@ function QueueRight() {
     Array.from({ length: 20 }).fill("")
   );
 
-  useEffect(() => {
-    getQueue();
-  }, []);
+
 
   return (
     <div className="h-full w-[25%] flex flex-col gap-[10px]">
