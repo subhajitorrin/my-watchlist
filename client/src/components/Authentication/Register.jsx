@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../store/UserStore";
 import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 function Register() {
   const navigator = useNavigate();
-  const { registerUser } = useUser();
+  const { registerUser, isLoading } = useUser();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,9 +85,10 @@ function Register() {
           </p>
           <button
             type="submit"
+            style={{ pointerEvents: isLoading ? "none" : "auto" }}
             className="bg-[#7e22ce] hover:bg-[#6018a0] font-[500] transition-all ease-linear duration-200 py-[7px] px-[10px] rounded-[5px] w-full"
           >
-            Register
+            {isLoading ? <BeatLoader color="#ffffff" size={5} /> : "Register"}
           </button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useUser } from "./store/UserStore.js";
@@ -26,11 +26,15 @@ function ProtectAuthenticatedRoutes({ children }) {
 }
 
 function App() {
-  const { isAuthChecking } = useUser();
+  const { isAuthChecking, getUser } = useUser();
   const location = useLocation();
   const shouldNotShowNavbar =
     location.pathname.startsWith("/login") ||
     location.pathname.startsWith("/register");
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   if (isAuthChecking) return <div className="h-screen bg-[#0a0a0a]"></div>;
 

@@ -1,9 +1,22 @@
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
+import { useUser } from "../store/UserStore";
+import { toast } from "react-toastify";
 
 // px-[11.8%]
 
 function Navbar() {
+  const { logout, isLoading } = useUser();
+
+  async function handleLogout() {
+    try {
+      await logout();
+      toast.success("Logout successful");
+    } catch (error) {
+      toast.warn(error.response?.data?.message || error.message);
+    }
+  }
+
   return (
     <nav className="flex items-center justify-between h-[60px] px-[3%]  text-white border-b border-[#ffffff41]">
       {/* Left Side: Logo and Title */}
@@ -27,7 +40,10 @@ function Navbar() {
           <span className="font-semibold">Subhajit Ghosh</span>
           <FaRegUser />
         </div>
-        <button className="bg-[#7e22ce] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[5px] px-[10px] rounded-[5px]">
+        <button
+          onClick={handleLogout}
+          className="bg-[#7e22ce] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[5px] px-[10px] rounded-[5px]"
+        >
           Logout
         </button>
       </div>

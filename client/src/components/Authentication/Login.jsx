@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../store/UserStore";
+import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 function Login() {
   const navigator = useNavigate();
+  const { loginUser, isLoading } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    try {
+      await loginUser(email, password);
+      navigator("/home");
+      toast.success("Login successful");
+    } catch (error) {
+      console.log(error);
+      toast.warn(error.response?.data?.message || error.message);
+    }
   };
 
   return (
@@ -59,9 +70,10 @@ function Login() {
           </p>
           <button
             type="submit"
+            style={{ pointerEvents: isLoading ? "none" : "auto" }}
             className="bg-[#7e22ce] hover:bg-[#6018a0] font-[500] transition-all ease-linear duration-200 py-[7px] px-[10px] rounded-[5px] w-full"
           >
-            Login
+            {isLoading ? <BeatLoader color="#ffffff" size={5} /> : "Login"}
           </button>
         </form>
       </div>
