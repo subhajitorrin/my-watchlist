@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useUser } from "./store/UserStore.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Authentication/Login";
 import Home from "./components/Home/Home";
-import Navbar from "./components/Navbar";
 import Register from "./components/Authentication/Register";
 
 function ProtectUnauthenticatedRoutes({ children }) {
@@ -27,10 +26,6 @@ function ProtectAuthenticatedRoutes({ children }) {
 
 function App() {
   const { isAuthChecking, getUser } = useUser();
-  const location = useLocation();
-  const shouldNotShowNavbar =
-    location.pathname.startsWith("/login") ||
-    location.pathname.startsWith("/register");
 
   useEffect(() => {
     getUser();
@@ -40,7 +35,6 @@ function App() {
 
   return (
     <div className="h-screen bg-[#0a0a0a] text-white select-none">
-      {!shouldNotShowNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Navigate to={"/home"} />} />
         <Route

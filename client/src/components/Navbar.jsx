@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { useUser } from "../store/UserStore";
 import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 // px-[11.8%]
 
 function Navbar() {
-  const { logout, isLoading } = useUser();
+  const { logout, isLoading, user } = useUser();
+
+  useEffect(()=>{
+    console.log(user);
+    
+  },[user])
 
   async function handleLogout() {
     try {
@@ -37,14 +43,15 @@ function Navbar() {
           Queue
         </a>
         <div className="flex gap-[7px] items-center">
-          <span className="font-semibold">Subhajit Ghosh</span>
+          <span className="font-semibold">{user.name}</span>
           <FaRegUser />
         </div>
         <button
+          style={{ pointerEvents: isLoading ? "none" : "auto" }}
           onClick={handleLogout}
-          className="bg-[#7e22ce] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[5px] px-[10px] rounded-[5px]"
+          className="bg-[#7e22ce] w-[100px] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[5px] rounded-[5px]"
         >
-          Logout
+          {isLoading ? <BeatLoader color="#ffffff" size={5} /> : "Logout"}
         </button>
       </div>
     </nav>
