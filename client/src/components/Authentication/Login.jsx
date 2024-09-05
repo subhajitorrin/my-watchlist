@@ -46,10 +46,10 @@ function Login() {
               className="w-full p-3 bg-[#333] text-white rounded outline-none py-[10px] text-[14px]"
             />
           </div>
-          <p className="text-center mb-[10px]">
+          <p className="text-center mb-[10px] text-[#ffffffbd] text-[14px]">
             Don't have an account ?{" "}
             <span
-              className="cursor-pointer font-[500]"
+              className="cursor-pointer font-[500] underline"
               onClick={() => {
                 navigator("/register");
               }}
