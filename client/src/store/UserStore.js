@@ -99,11 +99,31 @@ export const useVideo = create((set, get) => ({
   getLibrary: async () => {
     set({ isLoading: true })
     try {
-      const res = await axios.get(`${BASE_URL}/add-video-to-library`)
+      const res = await axios.get(`${BASE_URL}/get-library`)
+      set({library:res.data.library})
     } catch (error) {
       throw error;
     }finally{
       set({ isLoading: false })
     }
+  },
+  formatTime:(seconds)=>{
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+    let result = ""
+
+    if(formattedHours!=="00"){
+      result=`${formattedHours} : ${formattedMinutes} : ${formattedSeconds} hr`
+    }else{
+      result=`${formattedMinutes} : ${formattedSeconds} min`
+    }
+    
+    return result;
   }
 }))

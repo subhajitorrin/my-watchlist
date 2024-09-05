@@ -1,4 +1,5 @@
 import VideoModel from "../models/VideoModel.js";
+import UserModel from "../models/UserModel.js";
 import {
   getThumbnail,
   getVideoDurationAndTitle,
@@ -18,7 +19,7 @@ async function addVideoToLibrary(req, res) {
     const videoId = getVideoId(url);
     if (!videoId) throw new Error("Invalid YouTube Video Id");
 
-    const isPresent = await VideoModel.findOne({ videoId });
+    const isPresent = await VideoModel.findOne({ videoId, user: userid });
     if (isPresent) {
       return res
         .status(400)
@@ -36,6 +37,9 @@ async function addVideoToLibrary(req, res) {
       user: userid
     });
     const response = await newVideo.save();
+    await UserModel.findByIdAndUpdate(userid, {
+      $push: { videos: response._id }
+    });
     return res
       .status(201)
       .json({ message: "Video added", success: true, video: response });
@@ -47,4 +51,28 @@ async function addVideoToLibrary(req, res) {
   }
 }
 
-export { addVideoToLibrary };
+async function getLibrary(req, res) {
+  const userid = req.id;
+  try {
+    let library = await UserModel.findById(userid)
+      .select("videos")
+      .populate("videos");
+    if (!library) {
+      return res
+        .status(400)
+        .json({ message: "Library not found!", success: false });
+    }
+    return res.status(200).json({
+      message: "Library fetched",
+      success: true,
+      library: library.videos.length > 0 ? library.videos : []
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while getting library", success: false });
+  }
+}
+
+export { addVideoToLibrary, getLibrary };

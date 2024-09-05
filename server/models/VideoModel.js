@@ -5,7 +5,6 @@ const VideoSchema = mongoose.Schema(
     videoId: {
       type: String,
       required: true,
-      unique: true
     },
     title: {
       type: String,
