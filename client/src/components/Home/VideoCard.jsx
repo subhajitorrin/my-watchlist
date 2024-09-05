@@ -15,7 +15,7 @@ function VideoCard() {
       </div>
       <div className="w-[75%] flex flex-col justify-between py-[10px]">
         <div className="">
-          <h2 className="text-[16px] font-[500] ">
+          <h2 className="text-[16px] font-[500] text-[#ffffffba]">
             {title.length > 115 ? (
               <>
                 {title.slice(0, 115)}
@@ -26,7 +26,7 @@ function VideoCard() {
             )}
           </h2>
           <div className="flex gap-[10px]">
-            <p className="text-[13px]">6:34 min</p>
+            <p className="text-[13px] ">6:34 min</p>
             <p className="text-[13px] text-[#ffffff96]">
               Added 05-09-2024, 10:24 AM
             </p>
