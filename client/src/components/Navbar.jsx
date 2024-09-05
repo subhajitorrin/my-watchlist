@@ -28,13 +28,13 @@ function Navbar() {
 
       {/* Right Side: Navigation Links */}
       <div className="flex items-center space-x-6 font-[500]">
-        <a href="#home" className="hover:text-gray-400">
+        <a href="/home" className="hover:text-gray-400">
           Home
         </a>
-        <a href="#current-video" className="hover:text-gray-400">
+        <a href="/current-video" className="hover:text-gray-400">
           Player
         </a>
-        <a href="#queue" className="hover:text-gray-400">
+        <a href="/queue" className="hover:text-gray-400">
           Queue
         </a>
         <div className="flex gap-[7px] items-center">

@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import { MdOutlineDelete } from "react-icons/md";
 import { useVideo } from "../../store/VideoStore";
-import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 
 function VideoCard({ item }) {
   const [deleteLoad, setDeleteLoad] = useState(false);
   const { formatTime, getISTdate, getISTtime, deleteVideo } = useVideo();
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(item.url);
-      toast.success("Link copied");
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
 
   async function handleDeleteVideo() {
     setDeleteLoad(true);
@@ -73,12 +62,6 @@ function VideoCard({ item }) {
           >
             {deleteLoad ? <BeatLoader color="#ffffff" size={5} /> : "Delete"}
           </button>
-          <div className="">
-            {/* <MdContentCopy
-              onClick={copyToClipboard}
-              className="text-[15px] cursor-pointer"
-            /> */}
-          </div>
         </div>
       </div>
     </div>

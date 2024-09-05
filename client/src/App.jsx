@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Authentication/Login";
 import Home from "./components/Home/Home";
 import Register from "./components/Authentication/Register";
+import Queue from "./components/Queue/Queue.jsx";
 
 function ProtectUnauthenticatedRoutes({ children }) {
   const { isAuthenticated } = useUser();
@@ -58,6 +59,14 @@ function App() {
           element={
             <ProtectAuthenticatedRoutes>
               <Home />
+            </ProtectAuthenticatedRoutes>
+          }
+        />
+        <Route
+          path="/queue"
+          element={
+            <ProtectAuthenticatedRoutes>
+              <Queue />
             </ProtectAuthenticatedRoutes>
           }
         />
