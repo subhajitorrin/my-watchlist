@@ -10,6 +10,7 @@ export const useVideo = create((set, get) => ({
   library: [],
   queue: [],
   isLoading: false,
+  currnetVideo:null,
   addVideoToLibrary: async (url) => {
     set({ isLoading: true });
     try {
@@ -133,6 +134,8 @@ export const useVideo = create((set, get) => ({
       set({queue:updatedQueue})
       sessionStorage.setItem("queue", JSON.stringify(updatedQueue));
 
+      set({currnetVideo:updatedQueue[0]})
+
     } catch (error) {
       throw error;
     }
@@ -142,11 +145,11 @@ export const useVideo = create((set, get) => ({
     try {
       const queueFromSession = get().getQueueFromSession();
       if (queueFromSession !== null) {
-        set({ queue: queueFromSession });
+        set({ queue: queueFromSession,currnetVideo:queueFromSession[0] });
       } else {
         const res = await axios.get(`${BASE_URL}/get-queue`);
         const que = res.data.queue;
-        set({ queue: que });
+        set({ queue: que,currnetVideo:que[0] });
         sessionStorage.setItem("queue", JSON.stringify(que));
       }
     } catch (error) {
