@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 
 function QueueCard({ item }) {
-  const { formatTime, removeVideoFromQueue } = useVideo();
+  const { formatTime, removeVideoFromQueue, revertFromQueue } = useVideo();
   const [loading, setLoading] = useState(false);
+  const [revLoad, setRevLoad] = useState(false);
 
   async function handleRemoveVideoFromQueue() {
     setLoading(true);
@@ -16,6 +17,18 @@ function QueueCard({ item }) {
       toast.warn(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleRevert() {
+    setRevLoad(true);
+    try {
+      await revertFromQueue(item);
+      toast.success("Video reverted");
+    } catch (error) {
+      toast.warn(error.response?.data?.message || error.message);
+    } finally {
+      setRevLoad(false);
     }
   }
 
@@ -39,13 +52,17 @@ function QueueCard({ item }) {
         <div className="w-full flex justify-center gap-[10px]">
           <button
             onClick={handleRemoveVideoFromQueue}
-            style={{ pointerEvents: loading ? "none" : "auto" }}
+            style={{ pointerEvents: revLoad || loading ? "none" : "auto" }}
             className="bg-[#4ca8af] font-[500] hover:bg-[#3a8186] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]"
           >
             {loading ? <BeatLoader color="#ffffff" size={5} /> : "Remove"}
           </button>
-          <button className="bg-[#af4c7c] font-[500] hover:bg-[#8b3b62] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]">
-            Revert
+          <button
+            style={{ pointerEvents: loading || revLoad ? "none" : "auto" }}
+            onClick={handleRevert}
+            className="bg-[#af4c7c] font-[500] hover:bg-[#8b3b62] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]"
+          >
+            {revLoad ? <BeatLoader color="#ffffff" size={5} /> : "Revert"}
           </button>
         </div>
       </div>

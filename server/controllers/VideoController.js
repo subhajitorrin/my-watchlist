@@ -214,7 +214,7 @@ async function revertFromQueueToLibrary(req, res) {
     const { videoId } = req.body; 
     const userId = req.id; 
     
-    const user = await User.findOneAndUpdate(
+    const user = await UserModel.findOneAndUpdate(
       { _id: userId },
       {
         $pull: { queue: videoId }, 

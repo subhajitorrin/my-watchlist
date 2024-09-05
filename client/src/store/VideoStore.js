@@ -174,5 +174,25 @@ export const useVideo = create((set, get) => ({
     } finally {
       set({ isLoading: false });
     }
+  },
+  revertFromQueue: async (video) => {
+    try {
+      const videoId = video._id;
+      const res = await axios.put(`${BASE_URL}/revert-from-queue-to-library`, {
+        videoId
+      });
+      const tempQueue = get().queue.filter((item) => item._id !== videoId);
+      const tempLibrary = get().library;
+      const updatedLibrary = [video, ...tempLibrary];
+      set({
+        queue: tempQueue,
+        library: updatedLibrary,
+        currnetVideo: tempQueue.length > 0 ? tempQueue[0] : null
+      });
+      sessionStorage.setItem("queue", JSON.stringify(tempQueue));
+      sessionStorage.setItem("library", JSON.stringify(updatedLibrary));
+    } catch (error) {
+      throw error;
+    }
   }
 }));
