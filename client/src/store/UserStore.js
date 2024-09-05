@@ -9,9 +9,10 @@ export const useUser = create((set,get)=>({
     user:null,
     isLoading:false,
     isAuthenticated:false,
-    registerUser:async (email,password)=>{
+    isAuthChecking:false,
+    registerUser:async (name, email, password)=>{
         try {
-            const res = await axios.post(`${BASE_URL}/register-user`,{email,password});
+            const res = await axios.post(`${BASE_URL}/register`,{name, email, password});
             console.log(res);
         } catch (error) {
             throw error;

@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../store/UserStore";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigator = useNavigate();
+  const { registerUser } = useUser();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    try {
+      await registerUser(name, email, password);
+      navigator("/login");
+      toast.success("Register successful");
+    } catch (error) {
+      console.log(error);
+      toast.warn(error.response?.data?.message || error.message);
+    }
   };
 
   return (

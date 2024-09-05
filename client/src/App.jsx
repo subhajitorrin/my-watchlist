@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useUser } from "./store/UserStore.js";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Authentication/Login";
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar";
@@ -24,14 +26,13 @@ function ProtectAuthenticatedRoutes({ children }) {
 }
 
 function App() {
-  const { isAuthenticated } = useUser();
+  const { isAuthChecking } = useUser();
   const location = useLocation();
   const shouldNotShowNavbar =
     location.pathname.startsWith("/login") ||
     location.pathname.startsWith("/register");
 
-  if (isAuthenticated === null)
-    return <div className="h-screen bg-[#0a0a0a]"></div>;
+  if (isAuthChecking) return <div className="h-screen bg-[#0a0a0a]"></div>;
 
   return (
     <div className="h-screen bg-[#0a0a0a] text-white select-none">
@@ -64,6 +65,7 @@ function App() {
         />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }
