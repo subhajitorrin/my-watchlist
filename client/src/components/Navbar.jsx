@@ -1,9 +1,11 @@
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
 
+// px-[11.8%]
+
 function Navbar() {
   return (
-    <nav className="flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
+    <nav className="flex items-center justify-between h-[60px] px-[3%]  text-white border-b border-[#ffffff41]">
       {/* Left Side: Logo and Title */}
       <div className="flex items-center space-x-2">
         {/* <img src="your-logo.png" alt="Logo" className="w-10 h-10" /> */}
