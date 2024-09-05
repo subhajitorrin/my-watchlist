@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import VideoCard from "./VideoCard";
-import { useVideo } from "../../store/UserStore";
+import { useVideo } from "../../store/VideoStore";
 
 function HomeLeft() {
   const [myList, setMyList] = useState(Array.from({ length: 10 }).fill(""));

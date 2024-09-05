@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { useVideo } from "../../store/UserStore";
+import { useVideo } from "../../store/VideoStore";
 import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 function AddVideo() {
   const [url, seturl] = useState("");
-  const { addVideoToLibrary } = useVideo();
+  const { addVideoToLibrary, isLoading } = useVideo();
   async function handleAddVideo() {
     if (url === "") {
       return;
     }
     try {
       await addVideoToLibrary(url);
+      seturl("");
       toast.success("Video added");
     } catch (error) {
       toast.warn(error.response?.data?.message || error.message);
@@ -25,13 +27,15 @@ function AddVideo() {
         }}
         className="bg-[#111827] outline-none py-[7px] px-[20px] rounded-[5px]"
         type="text"
+        value={url}
         placeholder="Paste youtube link here..."
       />
       <button
         onClick={handleAddVideo}
+        style={{ pointerEvents: isLoading ? "none" : "auto" }}
         className="bg-[#7e22ce] hover:bg-[#6018a0] font-[500] transition-all ease-linear duration-200 py-[7px] px-[10px] rounded-[5px]"
       >
-        Add to list
+        {isLoading ? <BeatLoader color="#ffffff" size={5} /> : "Add to list"}
       </button>
     </div>
   );

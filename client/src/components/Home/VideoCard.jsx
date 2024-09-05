@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdOutlineDelete } from "react-icons/md";
-import { useVideo } from "../../store/UserStore.js";
+import { useVideo } from "../../store/VideoStore";
 
 function VideoCard({ item }) {
   const { formatTime } = useVideo();
