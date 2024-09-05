@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Register() {
   const navigator = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,9 +16,23 @@ function Login() {
     <div className="bg-[#0a0a0a] h-screen flex items-center justify-center">
       <div className="bg-[#1a1a1a] p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h1 className="text-2xl font-semibold text-white mb-6 text-center">
-          Login
+          Register
         </h1>
         <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-400 mb-2">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              placeholder="Enter name"
+              className="w-full p-3 bg-[#333] text-white rounded outline-none py-[10px] text-[14px]"
+            />
+          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-400 mb-2">
               Email
@@ -47,21 +62,21 @@ function Login() {
             />
           </div>
           <p className="text-center mb-[10px]">
-            Don't have an account ?{" "}
+            Already have an account ?{" "}
             <span
               className="cursor-pointer font-[500]"
               onClick={() => {
-                navigator("/register");
+                navigator("/login");
               }}
             >
-              Register
+              Login
             </span>
           </p>
           <button
             type="submit"
             className="bg-[#7e22ce] hover:bg-[#6018a0] font-[500] transition-all ease-linear duration-200 py-[7px] px-[10px] rounded-[5px] w-full"
           >
-            Login
+            Register
           </button>
         </form>
       </div>
@@ -69,4 +84,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
