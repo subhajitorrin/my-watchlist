@@ -110,5 +110,13 @@ export const useVideo = create((set, get) => ({
     } catch (error) {
       throw error
     }
+  },
+  addVideoToQueue:async(videoId)=>{
+    try {
+      const res = await axios.post(`${BASE_URL}/add-to-queue`,{videoId})
+      console.log(res);
+    } catch (error) {
+      throw error
+    }
   }
 }));

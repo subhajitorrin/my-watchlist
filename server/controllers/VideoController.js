@@ -115,4 +115,34 @@ async function deleteVideo(req, res) {
   }
 }
 
-export { addVideoToLibrary, getLibrary, deleteVideo };
+async function addToQueue(req, res) {
+  const userid = req.id;
+  const { videoId } = req.body;
+  try {
+    const user = await UserModel.findById(userid);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "User not found!", success: false });
+    }
+    const video = await VideoModel.findById(videoId);
+    if (!video) {
+      return res
+        .status(400)
+        .json({ message: "Video not found!", success: false });
+    }
+    user.videos.pull(videoId);
+    user.queue.push(videoId);
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "Added to queue", success: true, video });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while adding queue!", success: false });
+  }
+}
+
+export { addVideoToLibrary, getLibrary, deleteVideo, addToQueue };

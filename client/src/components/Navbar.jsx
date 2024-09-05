@@ -31,9 +31,6 @@ function Navbar() {
         <a href="/home" className="hover:text-gray-400">
           Home
         </a>
-        <a href="/current-video" className="hover:text-gray-400">
-          Player
-        </a>
         <a href="/queue" className="hover:text-gray-400">
           Queue
         </a>

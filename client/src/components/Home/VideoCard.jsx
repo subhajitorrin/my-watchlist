@@ -5,7 +5,22 @@ import { BeatLoader } from "react-spinners";
 
 function VideoCard({ item }) {
   const [deleteLoad, setDeleteLoad] = useState(false);
-  const { formatTime, getISTdate, getISTtime, deleteVideo } = useVideo();
+  const [addQueueLoad, setAddQueueLoad] = useState(false);
+  const { formatTime, getISTdate, getISTtime, deleteVideo, addVideoToQueue } =
+    useVideo();
+
+  async function handleAddVideoToQueue() {
+    setAddQueueLoad(true);
+    try {
+      await addVideoToQueue(item._id);
+      toast.success("Added to queue");
+    } catch (error) {
+      console.log(error);
+      toast.warn(error.response?.data?.message || error.message);
+    } finally {
+      setAddQueueLoad(false);
+    }
+  }
 
   async function handleDeleteVideo() {
     setDeleteLoad(true);
@@ -49,8 +64,16 @@ function VideoCard({ item }) {
           </div>
         </div>
         <div className="flex gap-[7px] items-center ">
-          <button className="bg-[#7e22ce] font-[500] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]">
-            Add to queue
+          <button
+            style={{ addQueueLoad: deleteLoad ? "none" : "auto" }}
+            onClick={handleAddVideoToQueue}
+            className="bg-[#7e22ce] font-[500] hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]"
+          >
+            {addQueueLoad ? (
+              <BeatLoader color="#ffffff" size={5} />
+            ) : (
+              "Add to queue"
+            )}
           </button>
           <button className="bg-[#4ca8af] font-[500] hover:bg-[#3a8186] transition-all ease-linear duration-200 py-[2px] px-[10px] rounded-[4px] text-[12px]">
             Reminder
