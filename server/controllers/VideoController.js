@@ -209,11 +209,35 @@ async function removeFromQueue(req, res) {
   }
 }
 
+async function revertFromQueueToLibrary(req, res) {
+  try {
+    const { videoId } = req.body; 
+    const userId = req.id; 
+    
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        $pull: { queue: videoId }, 
+        $push: { videos: videoId } 
+      },
+      { new: true } 
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "Video moved from queue to library", user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
 export {
   addVideoToLibrary,
   getLibrary,
   deleteVideo,
   addToQueue,
   getQueue,
-  removeFromQueue
+  removeFromQueue,
+  revertFromQueueToLibrary
 };
