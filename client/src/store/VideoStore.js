@@ -158,4 +158,15 @@ export const useVideo = create((set, get) => ({
       set({ isLoading: false });
     }
   },
+  removeVideoFromQueue:async(videoId)=>{
+    set({isLoading:true})
+    try {
+      const res = await axios.put(`${BASE_URL}/remove-from-queue`,{videoId});
+      console.log(res);
+    } catch (error) {
+      throw error
+    }finally{
+      set({isLoading:false})
+    }
+  }
 }));
