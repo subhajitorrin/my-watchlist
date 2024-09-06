@@ -194,5 +194,5 @@ export const useVideo = create((set, get) => ({
     } catch (error) {
       throw error;
     }
-  }
+  },
 }));
