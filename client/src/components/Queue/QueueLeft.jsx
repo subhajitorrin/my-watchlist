@@ -42,6 +42,14 @@ function QueueLeft() {
     if (currnetVideo !== null) handleGetPlayback();
   }, [currnetVideo]);
 
+  if (currnetVideo === null) {
+    return (
+      <div className="h-[550px] w-[70%] rounded-[10px] flex justify-center items-center bg-[#111827]">
+        <p className="text-[#ffffff8a]">Add video in queue to play</p>
+      </div>
+    );
+  }
+
   return (
     <div className="h-full w-[70%] gap-[10px] flex flex-col">
       {currnetVideo !== null && playback !== null && (
