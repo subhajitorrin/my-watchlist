@@ -24,11 +24,11 @@ async function getAiGeneratedTags(title, attempt = 0) {
     // Simulating model generation and response
     const res = await model.generateContent(prompt);
     let result = await res.response.text();
-    result=result.trim()
+    result = result.trim();
 
     let tagsArray = result ? result.split(",") : [];
-    tagsArray[0] = tagsArray[0].trim()
-    tagsArray[1] = tagsArray[1].trim()
+    tagsArray[0] = tagsArray[0].trim();
+    tagsArray[1] = tagsArray[1].trim();
 
     console.log(tagsArray);
 
@@ -68,12 +68,16 @@ async function addVideoToLibrary(req, res) {
     const { title, duration } = await getVideoDurationAndTitle(videoId);
     const tags = await getAiGeneratedTags(title);
 
+    const refinedUrl = url.includes("&list=")
+      ? `https://www.youtube.com/watch?v=${videoId}`
+      : url;
+
     const newVideo = new VideoModel({
       title,
       duration,
       thumbnail,
       videoId,
-      url,
+      url: refinedUrl,
       user: userid,
       tags: tags !== null ? tags : []
     });

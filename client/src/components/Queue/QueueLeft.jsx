@@ -44,18 +44,16 @@ function QueueLeft() {
 
   return (
     <div className="h-full w-[70%] gap-[10px] flex flex-col">
-      {currnetVideo !== null && (
+      {currnetVideo !== null && playback !== null && (
         <div className="">
-          {playback !== null && (
-            <ReactPlayer
-              url={`${currnetVideo.url}&start=${playback}`}
-              controls={true}
-              height={550}
-              width={"100%"}
-              onEnded={handleVideoEnd}
-              onProgress={handleStateChange}
-            />
-          )}
+          <ReactPlayer
+            url={`${currnetVideo.url}&start=${playback}`}
+            controls={true}
+            height={550}
+            width={"100%"}
+            onEnded={handleVideoEnd}
+            onProgress={handleStateChange}
+          />
           <div className="flex justify-between">
             <p className="text-[17px] font-[500] mt-[10px]">
               {currnetVideo.title}
