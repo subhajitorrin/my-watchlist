@@ -11,12 +11,10 @@ function QueueLeft() {
     getPlayback,
     setCurrentProgress
   } = useVideo();
-
+  const [playback, setPlayback] = useState(null);
   const [toggleChecked, settoggleChecked] = useState(
     JSON.parse(sessionStorage.getItem("isRevert")) || false
   );
-
-  const [playback, setPlayback] = useState(null);
 
   async function handleVideoEnd() {
     try {
@@ -33,6 +31,7 @@ function QueueLeft() {
 
   function handleStateChange(e) {
     setCurrentProgress(parseInt(e.playedSeconds));
+    sessionStorage.setItem("progress", parseInt(e.playedSeconds));
   }
 
   useEffect(() => {

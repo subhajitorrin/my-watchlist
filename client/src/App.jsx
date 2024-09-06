@@ -28,7 +28,7 @@ function ProtectAuthenticatedRoutes({ children }) {
 
 function App() {
   const { isAuthChecking, getUser, user } = useUser();
-  const { getQueue, getLibrary } = useVideo();
+  const { getQueue, getLibrary, updateProgress,currnetVideo } = useVideo();
 
   useEffect(() => {
     getUser();
