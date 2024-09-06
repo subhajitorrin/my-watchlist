@@ -12,12 +12,7 @@ const opts = {
 };
 
 function QueueLeft() {
-  const {
-    currnetVideo,
-    revertFromQueue,
-    removeVideoFromQueue,
-    revertAfterEnd
-  } = useVideo();
+  const { currnetVideo, revertFromQueue, removeVideoFromQueue } = useVideo();
 
   const [toggleChecked, settoggleChecked] = useState(
     JSON.parse(sessionStorage.getItem("isRevert")) || false
@@ -25,7 +20,11 @@ function QueueLeft() {
 
   async function handleVideoEnd() {
     try {
-      console.log("video ended");
+      if (toggleChecked) {
+        await revertFromQueue(currnetVideo);
+      } else {
+        await removeVideoFromQueue(currnetVideo._id);
+      }
     } catch (error) {
       console.log(error);
       toast.warn(error.response?.data?.message || error.message);
