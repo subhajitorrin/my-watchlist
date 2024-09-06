@@ -16,51 +16,35 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 async function getAiGeneratedTags(title, attempt = 0) {
   const prompt = `I need help categorizing a video based on its title. The title is '${title}'. Please provide two categories in the following format: 
 
-  General Category: [general category]
-  Specific Category: [specific category]
+  GeneralCategory,Specific Category
   
-  The general category should be a broad category that fits the content (e.g., 'Programming and Development'), and the specific category should be more focused and related to the title of the video (e.g., 'Java' for Java-related content). Please give short categories.`;
+  The general category should be a broad category that fits the content (e.g., 'Programming and Development'), and the specific category should be more focused and related to the title of the video (e.g., 'Java' for Java-related content). Please give short categories. Don't give any other text just give two of them comma seperated. If the title is in another language then understand the meaning and give the category in english.`;
 
   try {
     // Simulating model generation and response
     const res = await model.generateContent(prompt);
-    const result = await res.response.text();
+    let result = await res.response.text();
+    result=result.trim()
 
-    console.clear();
+    console.log("--------------------------------------------------");
     console.log(result);
 
-    // Define regex patterns to extract categories
-    const generalCategoryPattern = /\*\*General Category:\*\* ([^\n]*)/;
-    const specificCategoryPattern = /\*\*Specific Category:\*\* ([^\n]*)/;
+    let tagsArray = result ? result.split(",") : [];
+    tagsArray[0] = tagsArray[0].trim()
+    tagsArray[1] = tagsArray[1].trim()
 
-    // Extract categories using regex
-    const generalCategoryMatch = result.match(generalCategoryPattern);
-    const specificCategoryMatch = result.match(specificCategoryPattern);
+    console.log(tagsArray);
 
-    const generalCategory = generalCategoryMatch
-      ? generalCategoryMatch[1].trim()
-      : "";
-    const specificCategory = specificCategoryMatch
-      ? specificCategoryMatch[1].trim()
-      : "";
-
-    // Retry logic if categories are empty and retry limit is not reached
-    if ((generalCategory === "" || specificCategory === "") && attempt < 3) {
+    if (tagsArray.length === 0 && attempt < 3) {
       console.log("Categories not found, retrying...");
       return await getAiGeneratedTags(title, attempt + 1);
     }
 
-    return {
-      GeneralCategory: generalCategory,
-      SpecificCategory: specificCategory
-    };
+    return tagsArray;
   } catch (error) {
     console.error("Error:", error);
     // Return empty categories in case of error
-    return {
-      GeneralCategory: "",
-      SpecificCategory: ""
-    };
+    return null;
   }
 }
 
@@ -85,10 +69,7 @@ async function addVideoToLibrary(req, res) {
 
     const thumbnail = getThumbnail(videoId);
     const { title, duration } = await getVideoDurationAndTitle(videoId);
-
-    // ai tags
     const tags = await getAiGeneratedTags(title);
-    console.log(tags);
 
     const newVideo = new VideoModel({
       title,
@@ -96,7 +77,8 @@ async function addVideoToLibrary(req, res) {
       thumbnail,
       videoId,
       url,
-      user: userid
+      user: userid,
+      tags: tags !== null ? tags : []
     });
     const response = await newVideo.save();
     await UserModel.findByIdAndUpdate(userid, {
