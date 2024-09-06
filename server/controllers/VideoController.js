@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import VideoModel from "../models/VideoModel.js";
 import UserModel from "../models/UserModel.js";
 import {
@@ -6,6 +7,62 @@ import {
   getVideoId,
   isYouTubeUrl
 } from "../utility/YoutubeTools.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+dotenv.config();
+const genAI = new GoogleGenerativeAI(process.env.APIKEY_GEMINI);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+async function getAiGeneratedTags(title, attempt = 0) {
+  const prompt = `I need help categorizing a video based on its title. The title is '${title}'. Please provide two categories in the following format: 
+
+  General Category: [general category]
+  Specific Category: [specific category]
+  
+  The general category should be a broad category that fits the content (e.g., 'Programming and Development'), and the specific category should be more focused and related to the title of the video (e.g., 'Java' for Java-related content). Please give short categories.`;
+
+  try {
+    // Simulating model generation and response
+    const res = await model.generateContent(prompt);
+    const result = await res.response.text();
+
+    console.clear();
+    console.log(result);
+
+    // Define regex patterns to extract categories
+    const generalCategoryPattern = /\*\*General Category:\*\* ([^\n]*)/;
+    const specificCategoryPattern = /\*\*Specific Category:\*\* ([^\n]*)/;
+
+    // Extract categories using regex
+    const generalCategoryMatch = result.match(generalCategoryPattern);
+    const specificCategoryMatch = result.match(specificCategoryPattern);
+
+    const generalCategory = generalCategoryMatch
+      ? generalCategoryMatch[1].trim()
+      : "";
+    const specificCategory = specificCategoryMatch
+      ? specificCategoryMatch[1].trim()
+      : "";
+
+    // Retry logic if categories are empty and retry limit is not reached
+    if ((generalCategory === "" || specificCategory === "") && attempt < 3) {
+      console.log("Categories not found, retrying...");
+      return await getAiGeneratedTags(title, attempt + 1);
+    }
+
+    return {
+      GeneralCategory: generalCategory,
+      SpecificCategory: specificCategory
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    // Return empty categories in case of error
+    return {
+      GeneralCategory: "",
+      SpecificCategory: ""
+    };
+  }
+}
 
 async function addVideoToLibrary(req, res) {
   const { url } = req.body;
@@ -28,6 +85,11 @@ async function addVideoToLibrary(req, res) {
 
     const thumbnail = getThumbnail(videoId);
     const { title, duration } = await getVideoDurationAndTitle(videoId);
+
+    // ai tags
+    const tags = await getAiGeneratedTags(title);
+    console.log(tags);
+
     const newVideo = new VideoModel({
       title,
       duration,
@@ -260,13 +322,11 @@ async function getPlayback(req, res) {
   const { videoid } = req.params;
   try {
     const playBackRes = await VideoModel.findById(videoid).select("playback");
-    return res
-      .status(200)
-      .json({
-        message: "Playback fetched",
-        success: false,
-        playback: playBackRes.playback ? playBackRes.playback : 0
-      });
+    return res.status(200).json({
+      message: "Playback fetched",
+      success: false,
+      playback: playBackRes.playback ? playBackRes.playback : 0
+    });
   } catch (error) {
     console.log(error);
     return res
