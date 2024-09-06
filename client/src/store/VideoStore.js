@@ -195,4 +195,12 @@ export const useVideo = create((set, get) => ({
       throw error;
     }
   },
+  updateProgress:async(video,sec)=>{
+    try {
+      const res = await axios.put(`${BASE_URL}/update-progress`,{videoid:video._id,sec})
+      console.log(res);
+    } catch (error) {
+      throw error
+    }
+  }
 }));

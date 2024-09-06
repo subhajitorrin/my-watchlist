@@ -173,7 +173,7 @@ async function getQueue(req, res) {
 async function removeFromQueue(req, res) {
   const { videoId } = req.body;
   const userid = req.id;
-  
+
   try {
     const video = await VideoModel.findById(videoId);
     if (!video) {
@@ -211,24 +211,48 @@ async function removeFromQueue(req, res) {
 
 async function revertFromQueueToLibrary(req, res) {
   try {
-    const { videoId } = req.body; 
-    const userId = req.id; 
-    
+    const { videoId } = req.body;
+    const userId = req.id;
+
     const user = await UserModel.findOneAndUpdate(
       { _id: userId },
       {
-        $pull: { queue: videoId }, 
-        $push: { videos: videoId } 
+        $pull: { queue: videoId },
+        $push: { videos: videoId }
       },
-      { new: true } 
+      { new: true }
     );
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ message: "Video moved from queue to library", user });
+    res
+      .status(200)
+      .json({ message: "Video moved from queue to library", user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+}
+
+async function updateProgress(req, res) {
+  const { videoid, sec } = req.body;
+  try {
+    const video = await VideoModel.findByIdAndUpdate(
+      videoid,
+      { playback: sec },
+      { new: true }
+    );
+    if (!video) {
+      return res
+        .status(400)
+        .json({ message: "Video not found!", success: false });
+    }
+    return res.status(200).json({ message: "Playback updated", success: true });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while updating playback", success: false });
   }
 }
 
@@ -239,5 +263,6 @@ export {
   addToQueue,
   getQueue,
   removeFromQueue,
-  revertFromQueueToLibrary
+  revertFromQueueToLibrary,
+  updateProgress
 };
