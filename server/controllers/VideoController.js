@@ -26,9 +26,6 @@ async function getAiGeneratedTags(title, attempt = 0) {
     let result = await res.response.text();
     result=result.trim()
 
-    console.log("--------------------------------------------------");
-    console.log(result);
-
     let tagsArray = result ? result.split(",") : [];
     tagsArray[0] = tagsArray[0].trim()
     tagsArray[1] = tagsArray[1].trim()
