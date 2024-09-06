@@ -18,7 +18,7 @@ async function getAiGeneratedTags(title, attempt = 0) {
 
   GeneralCategory,Specific Category
   
-  The general category should be a broad category that fits the content (e.g., 'Programming and Development'), and the specific category should be more focused and related to the title of the video (e.g., 'Java' for Java-related content). Please give short categories. Don't give any other text just give two of them comma seperated. If the title is in another language then understand the meaning and give the category in english.`;
+  The general category should be a broad category that fits the content (e.g., 'Programming and Development'), and the specific category should be more focused and related to the title of the video (e.g., 'Java' for Java-related content). Please give short categories. Don't give any other text just give two of them comma seperated. If the title is in another language then understand the meaning and give the category in english. If the categories are small then you can give more than two categories if you want but if the categories are larger then two is enough.`;
 
   try {
     // Simulating model generation and response
