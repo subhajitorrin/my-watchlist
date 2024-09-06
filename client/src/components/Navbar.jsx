@@ -31,11 +31,14 @@ function Navbar() {
         <a href="/home" className="hover:text-gray-400">
           Home
         </a>
+        <a href="/collection" className="hover:text-gray-400">
+          Collection
+        </a>
         <a href="/queue" className="hover:text-gray-400">
           Queue
         </a>
         <div className="flex gap-[7px] items-center">
-          <span className="font-semibold">{user.name}</span>
+          <span className="font-semibold"> - {user.name}</span>
           <FaRegUser />
         </div>
         <button
