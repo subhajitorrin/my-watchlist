@@ -256,6 +256,25 @@ async function updateProgress(req, res) {
   }
 }
 
+async function getPlayback(req, res) {
+  const { videoid } = req.params;
+  try {
+    const playBackRes = await VideoModel.findById(videoid).select("playback");
+    return res
+      .status(200)
+      .json({
+        message: "Playback fetched",
+        success: false,
+        playback: playBackRes.playback ? playBackRes.playback : 0
+      });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while fetching playback", success: false });
+  }
+}
+
 export {
   addVideoToLibrary,
   getLibrary,
@@ -264,5 +283,6 @@ export {
   getQueue,
   removeFromQueue,
   revertFromQueueToLibrary,
-  updateProgress
+  updateProgress,
+  getPlayback
 };
