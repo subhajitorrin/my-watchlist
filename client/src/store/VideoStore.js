@@ -10,6 +10,7 @@ export const useVideo = create((set, get) => ({
   library: [],
   queue: [],
   categories: [],
+  tags:[],
   isLoading: false,
   currnetVideo: null,
   currentProgress: null,
@@ -233,6 +234,15 @@ export const useVideo = create((set, get) => ({
       const res = await axios.get(`${BASE_URL}/get-categories`);
       console.log();
       set({categories:res.data.categories.categories})
+    } catch (error) {
+      throw error;
+    }
+  },
+  getAllTags: async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/get-tags`);
+      console.log(res.data.tagslist);
+      // set({categories:res.data.categories.categories})
     } catch (error) {
       throw error;
     }

@@ -10,7 +10,8 @@ import {
   removeFromQueue,
   revertFromQueueToLibrary,
   updateProgress,
-  getCategories
+  getCategories,
+  getAllTags
 } from "../controllers/VideoController.js";
 const VideoRouter = express.Router();
 VideoRouter.post("/add-video-to-library", authToken, addVideoToLibrary);
@@ -27,4 +28,6 @@ VideoRouter.put(
   revertFromQueueToLibrary
 );
 VideoRouter.get("/get-categories", authToken, getCategories);
+VideoRouter.get("/get-tags", authToken, getAllTags);
+
 export default VideoRouter;

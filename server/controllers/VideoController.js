@@ -409,6 +409,27 @@ async function getCategories(req, res) {
   }
 }
 
+async function getAllTags(req, res) {
+  try {
+    const userid = req.id;
+    const tagslist = await VideoModel.find({ user: userid })
+      .select("tags")
+      .exec();
+    const tags = tagslist.flatMap(item => item.tags);
+    const tagsSet = new Set(tags);
+    res.status(200).json({
+      message: "All tags feched",
+      success: true,
+      tagslist: [...tagsSet]
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error while fetching tags", success: false });
+  }
+}
+
 export {
   addVideoToLibrary,
   getLibrary,
@@ -419,5 +440,6 @@ export {
   revertFromQueueToLibrary,
   updateProgress,
   getPlayback,
-  getCategories
+  getCategories,
+  getAllTags
 };

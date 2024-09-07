@@ -45,7 +45,10 @@ function CategoryCard({ item }) {
         <div className="text-[12px] flex gap-[10px] mt-[3px] flex-wrap">
           {item.tags.slice(0, 3).map((item, index) => {
             return (
-              <div className="text-[11px] bg-[#374f86] inline-block rounded-[5px] px-[7px] py-[2px]">
+              <div
+                key={index}
+                className="text-[11px] bg-[#374f86] inline-block rounded-[5px] px-[7px] py-[2px]"
+              >
                 {item}
               </div>
             );

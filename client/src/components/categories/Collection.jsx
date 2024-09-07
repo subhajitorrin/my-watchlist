@@ -4,9 +4,12 @@ import { useVideo } from "../../store/VideoStore";
 import CategoryCard from "./CategoryCard";
 
 function Collection() {
-  const { getAllCategories, categories } = useVideo();
+  const { getAllCategories, categories,getAllTags } = useVideo();
   useEffect(() => {
     getAllCategories();
+  }, []);
+  useEffect(() => {
+    getAllTags();
   }, []);
   return (
     <>
