@@ -377,7 +377,7 @@ async function getPlayback(req, res) {
     const playBackRes = await VideoModel.findById(videoid).select("playback");
     return res.status(200).json({
       message: "Playback fetched",
-      success: false,
+      success: true,
       playback: playBackRes.playback ? playBackRes.playback : 0
     });
   } catch (error) {
@@ -385,6 +385,25 @@ async function getPlayback(req, res) {
     return res
       .status(500)
       .json({ message: "Error while fetching playback", success: false });
+  }
+}
+
+async function getCategories(req, res) {
+  const userid = req.id;
+  try {
+    const categories = await UserModel.findById(userid)
+      .select("categories")
+      .populate("categories");
+    return res.status(200).json({
+      message: "Categories fetched",
+      success: true,
+      categories
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error while fetching categories", success: false });
   }
 }
 
@@ -397,5 +416,6 @@ export {
   removeFromQueue,
   revertFromQueueToLibrary,
   updateProgress,
-  getPlayback
+  getPlayback,
+  getCategories
 };
