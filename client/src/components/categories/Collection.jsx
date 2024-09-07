@@ -36,7 +36,7 @@ function Collection() {
     <>
       <Navbar />
       <div className="">
-        <div  className="flex justify-center relative">
+        <div className="flex justify-center relative">
           <div
             onClick={slideLeft}
             className="absolute cursor-pointer left-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]"
@@ -49,7 +49,10 @@ function Collection() {
           >
             <RiArrowDropLeftLine className="rotate-180" />
           </div>
-          <div ref={container} className="relative w-[82%] flex gap-[10px] mt-[10px] mb-[20px] overflow-x-auto scrollNone">
+          <div
+            ref={container}
+            className="relative w-[82%] flex gap-[10px] mt-[10px] mb-[20px] overflow-x-auto scrollNone"
+          >
             {tags.map((item, index) => {
               return (
                 <div
