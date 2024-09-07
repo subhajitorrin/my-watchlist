@@ -231,7 +231,8 @@ export const useVideo = create((set, get) => ({
   getAllCategories: async () => {
     try {
       const res = await axios.get(`${BASE_URL}/get-categories`);
-      console.log(res.data.categories.categories);
+      console.log();
+      set({categories:res.data.categories.categories})
     } catch (error) {
       throw error;
     }
