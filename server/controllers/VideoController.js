@@ -47,9 +47,17 @@ async function getAiGeneratedTags(title, attempt = 0) {
 async function AIgeneratedCategories(title, userid, videoId, tags) {
   if (tags.length === 0) return;
 
+  const existingCategoryRes = await CategoryModel.find({
+    user: userid
+  }).select("name");
+
+  const existingCategoryNames = existingCategoryRes.map(item => item.name);
+
   const prompt = `I have a video titled ${title} with tags "${tags.join(
     ","
-  )}" and a collection of videos in my database, each tagged with multiple keywords. I would like to organize these videos into categories. My current categories are "Music," "Gaming," and "Programming." Please analyze the tags of my video to determine if they fit into any of the existing categories. If they do, simply provide the relevant category name. If they do not, suggest a new category name. Just give me one single category name which fits more. and don't give any other text or something just give category name.`;
+  )}" and a collection of videos in my database, each tagged with multiple keywords. I would like to organize these videos into categories. My current categories are "${existingCategoryNames.join(
+    ","
+  )}" Please analyze the tags of my video to determine if they fit into any of the existing categories. If they do, simply provide the relevant category name. If they do not, suggest a new category name. Just give me one single category name which fits more. and don't give any other text or something just give category name.`;
 
   try {
     const res = await model.generateContent(prompt);
