@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar";
 import { useVideo } from "../../store/VideoStore";
 import CategoryCard from "./CategoryCard";
+import { RiArrowDropLeftLine } from "react-icons/ri";
 
 function Collection() {
   const { getAllCategories, categories, getAllTags, tags } = useVideo();
@@ -15,13 +16,19 @@ function Collection() {
     <>
       <Navbar />
       <div className="">
-        <div className="flex justify-center">
-          <div className="w-[82%] flex gap-[10px] mt-[10px] mb-[20px] overflow-x-auto scrollNone">
+        <div className="flex justify-center relative">
+          <div className="absolute cursor-pointer left-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]">
+            <RiArrowDropLeftLine />
+          </div>
+          <div className="absolute cursor-pointer right-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]">
+            <RiArrowDropLeftLine className="rotate-180" />
+          </div>
+          <div className="relative w-[82%] flex gap-[10px] mt-[10px] mb-[20px] overflow-x-auto scrollNone">
             {tags.map((item, index) => {
               return (
                 <div
                   key={index}
-                  className="min-w-fit text-[13px] cursor-pointer font-[500] bg-[#272727] inline-block rounded-[5px] px-[10px] py-[5px]"
+                  className="hover:bg-[#1d1c1c] transition-all ease-linear duration-200 min-w-fit text-[13px] cursor-pointer font-[500] bg-[#272727] inline-block rounded-[5px] px-[10px] py-[5px]"
                 >
                   <p className="relative top-[-2px]">{item}</p>
                 </div>
