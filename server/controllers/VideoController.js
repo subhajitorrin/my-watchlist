@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import VideoModel from "../models/VideoModel.js";
 import UserModel from "../models/UserModel.js";
+import CategoryModel from "../models/CategoryModel.js";
 import {
   getThumbnail,
   getVideoDurationAndTitle,
@@ -30,8 +31,6 @@ async function getAiGeneratedTags(title, attempt = 0) {
     tagsArray[0] = tagsArray[0].trim();
     tagsArray[1] = tagsArray[1].trim();
 
-    console.log(tagsArray);
-
     if (tagsArray.length === 0 && attempt < 3) {
       console.log("Categories not found, retrying...");
       return await getAiGeneratedTags(title, attempt + 1);
@@ -41,6 +40,42 @@ async function getAiGeneratedTags(title, attempt = 0) {
   } catch (error) {
     console.error("Error:", error);
     // Return empty categories in case of error
+    return null;
+  }
+}
+
+async function AIgeneratedCategories(title, userid, videoId, tags) {
+  if (tags.length === 0) return;
+
+  const prompt = `I have a video titled ${title} with tags "${tags.join(
+    ","
+  )}" and a collection of videos in my database, each tagged with multiple keywords. I would like to organize these videos into categories. My current categories are "Music," "Gaming," and "Programming." Please analyze the tags of my video to determine if they fit into any of the existing categories. If they do, simply provide the relevant category name. If they do not, suggest a new category name. Just give me one single category name which fits more. and don't give any other text or something just give category name.`;
+
+  try {
+    const res = await model.generateContent(prompt);
+    const result = await res.response.text();
+    const existingCategory = await CategoryModel.findOne({
+      name: result.trim(),
+      user: userid
+    });
+
+    if (existingCategory) {
+      existingCategory.videos.push(videoId);
+      existingCategory.videoCount = existingCategory.videos.length;
+      await existingCategory.save();
+    } else {
+      const newCategory = new CategoryModel({
+        name: result.trim(),
+        videoCount: 1,
+        tags,
+        videos: [videoId],
+        user: userid
+      });
+      await newCategory.save();
+      return result.trim();
+    }
+  } catch (error) {
+    console.error("Error:", error);
     return null;
   }
 }
@@ -85,6 +120,8 @@ async function addVideoToLibrary(req, res) {
     await UserModel.findByIdAndUpdate(userid, {
       $push: { videos: response._id }
     });
+    await AIgeneratedCategories(title, userid, response._id, tags);
+
     return res
       .status(201)
       .json({ message: "Video added", success: true, video: response });
