@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../Navbar";
 import { useVideo } from "../../store/VideoStore";
 import CategoryCard from "./CategoryCard";
@@ -6,24 +6,50 @@ import { RiArrowDropLeftLine } from "react-icons/ri";
 
 function Collection() {
   const { getAllCategories, categories, getAllTags, tags } = useVideo();
+  const container = useRef(null);
+
   useEffect(() => {
     getAllCategories();
   }, []);
   useEffect(() => {
     getAllTags();
   }, []);
+
+  function slideRight() {
+    if (container.current) {
+      container.current.scrollTo({
+        left: container.current.scrollLeft + 300,
+        behavior: "smooth"
+      });
+    }
+  }
+  function slideLeft() {
+    if (container.current) {
+      container.current.scrollTo({
+        left: container.current.scrollLeft - 300,
+        behavior: "smooth"
+      });
+    }
+  }
+
   return (
     <>
       <Navbar />
       <div className="">
-        <div className="flex justify-center relative">
-          <div className="absolute cursor-pointer left-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]">
+        <div  className="flex justify-center relative">
+          <div
+            onClick={slideLeft}
+            className="absolute cursor-pointer left-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]"
+          >
             <RiArrowDropLeftLine />
           </div>
-          <div className="absolute cursor-pointer right-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]">
+          <div
+            onClick={slideRight}
+            className="absolute cursor-pointer right-[6.5%] top-[11px] bg-[#272727] text-[white] p-[5px] rounded-[100%] z-[10]"
+          >
             <RiArrowDropLeftLine className="rotate-180" />
           </div>
-          <div className="relative w-[82%] flex gap-[10px] mt-[10px] mb-[20px] overflow-x-auto scrollNone">
+          <div ref={container} className="relative w-[82%] flex gap-[10px] mt-[10px] mb-[20px] overflow-x-auto scrollNone">
             {tags.map((item, index) => {
               return (
                 <div
