@@ -78,12 +78,14 @@ async function AIgeneratedCategories(title, userid, videoId, tags) {
       const category = await existingCategory.save();
       return category;
     } else {
+      const image = await VideoModel.findById(videoId).select("thumbnail");
       const newCategory = new CategoryModel({
         name: result.trim(),
         videoCount: 1,
         tags,
         videos: [videoId],
-        user: userid
+        user: userid,
+        image: image.thumbnail
       });
       const category = await newCategory.save();
       return category;

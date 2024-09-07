@@ -9,6 +9,7 @@ axios.defaults.withCredentials = true;
 export const useVideo = create((set, get) => ({
   library: [],
   queue: [],
+  categories: [],
   isLoading: false,
   currnetVideo: null,
   currentProgress: null,
@@ -134,7 +135,7 @@ export const useVideo = create((set, get) => ({
       set({ queue: updatedQueue });
       sessionStorage.setItem("queue", JSON.stringify(updatedQueue));
 
-      get().updateProgress()
+      get().updateProgress();
 
       set({ currnetVideo: updatedQueue[0] });
     } catch (error) {
@@ -167,7 +168,7 @@ export const useVideo = create((set, get) => ({
     try {
       const res = await axios.put(`${BASE_URL}/remove-from-queue`, { videoId });
       const tempQueue = get().queue.filter((item) => item._id !== videoId);
-      get().updateProgress()
+      get().updateProgress();
       set({
         queue: tempQueue,
         currnetVideo: tempQueue.length > 0 ? tempQueue[0] : null
@@ -188,7 +189,7 @@ export const useVideo = create((set, get) => ({
       const tempQueue = get().queue.filter((item) => item._id !== videoId);
       const tempLibrary = get().library;
       const updatedLibrary = [video, ...tempLibrary];
-      get().updateProgress()
+      get().updateProgress();
       set({
         queue: tempQueue,
         library: updatedLibrary,
@@ -203,11 +204,11 @@ export const useVideo = create((set, get) => ({
   updateProgress: async () => {
     const tempCurrnetVideo = get().currnetVideo;
     const tempCurrentProgress = get().currentProgress;
-    if(tempCurrnetVideo===null || tempCurrentProgress===null)return
+    if (tempCurrnetVideo === null || tempCurrentProgress === null) return;
     try {
       const res = await axios.put(`${BASE_URL}/update-progress`, {
         videoid: tempCurrnetVideo._id,
-        sec:tempCurrentProgress
+        sec: tempCurrentProgress
       });
       console.log(res);
     } catch (error) {
@@ -226,5 +227,13 @@ export const useVideo = create((set, get) => ({
   },
   setCurrentProgress: async (sec) => {
     set({ currentProgress: sec });
+  },
+  getAllCategories: async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/get-categories`);
+      console.log(res.data.categories.categories);
+    } catch (error) {
+      throw error;
+    }
   }
 }));
