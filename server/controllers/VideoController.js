@@ -68,6 +68,11 @@ async function AIgeneratedCategories(title, userid, videoId, tags) {
     });
 
     if (existingCategory) {
+      for (let tag of tags) {
+        if (!existingCategory.tags.includes(tag)) {
+          existingCategory.tags.push(tag);
+        }
+      }
       existingCategory.videos.push(videoId);
       existingCategory.videoCount = existingCategory.videos.length;
       await existingCategory.save();
