@@ -75,7 +75,8 @@ async function AIgeneratedCategories(title, userid, videoId, tags) {
       }
       existingCategory.videos.push(videoId);
       existingCategory.videoCount = existingCategory.videos.length;
-      await existingCategory.save();
+      const category = await existingCategory.save();
+      return category;
     } else {
       const newCategory = new CategoryModel({
         name: result.trim(),
@@ -84,8 +85,8 @@ async function AIgeneratedCategories(title, userid, videoId, tags) {
         videos: [videoId],
         user: userid
       });
-      await newCategory.save();
-      return result.trim();
+      const category = await newCategory.save();
+      return category;
     }
   } catch (error) {
     console.error("Error:", error);
@@ -130,10 +131,29 @@ async function addVideoToLibrary(req, res) {
       tags: tags !== null ? tags : []
     });
     const response = await newVideo.save();
-    await UserModel.findByIdAndUpdate(userid, {
+
+    const category = await AIgeneratedCategories(
+      title,
+      userid,
+      response._id,
+      tags
+    );
+
+    const categoryId = category._id ? category._id.toString() : null;
+
+    const updateQuery = {
       $push: { videos: response._id }
-    });
-    await AIgeneratedCategories(title, userid, response._id, tags);
+    };
+    if (categoryId) {
+      updateQuery.$addToSet = { categories: categoryId };
+    }
+
+    await UserModel.updateOne({ _id: userid }, updateQuery);
+
+    if (categoryId) {
+      response.category = categoryId;
+      await response.save();
+    }
 
     return res
       .status(201)

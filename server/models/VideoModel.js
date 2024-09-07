@@ -4,7 +4,7 @@ const VideoSchema = mongoose.Schema(
   {
     videoId: {
       type: String,
-      required: true,
+      required: true
     },
     title: {
       type: String,
@@ -33,6 +33,10 @@ const VideoSchema = mongoose.Schema(
     playback: {
       type: Number,
       default: 0
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category"
     }
   },
   { timestamps: true }
