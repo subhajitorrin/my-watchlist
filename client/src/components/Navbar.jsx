@@ -7,7 +7,10 @@ import { useLocation, Link } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
-  const { logout, isLoading, user } = useUser();
+  const { logout, isLoading, user } = useUser((state)=>({
+    logout:state.logout,
+    
+  }));
   const [search, setSearch] = useState("");
 
   const handleLogout = async () => {
