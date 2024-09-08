@@ -495,6 +495,9 @@ async function searchVideo(req, res) {
   const useid = req.id;
   const { searchQuery } = req.query;
   console.log(searchQuery);
+  res
+    .status(200)
+    .json({ message: "Search result", success: true, list: searchQuery });
 }
 
 export {
