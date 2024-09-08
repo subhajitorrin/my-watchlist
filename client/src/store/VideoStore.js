@@ -1,19 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-catch */
 import { create } from "zustand";
+import {persist} from "zustand/middleware"
 import axios from "axios";
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 axios.defaults.withCredentials = true;
 
-export const useVideo = create((set, get) => ({
+export const useVideo = create(persist((set, get) => ({
   library: [],
   queue: [],
   categories: [],
-  tags:[],
+  tags: [],
   isLoading: false,
   currnetVideo: null,
   currentProgress: null,
+  homeDropDownInex: null,
   addVideoToLibrary: async (url) => {
     set({ isLoading: true });
     try {
@@ -233,7 +235,7 @@ export const useVideo = create((set, get) => ({
     try {
       const res = await axios.get(`${BASE_URL}/get-categories`);
       console.log();
-      set({categories:res.data.categories.categories})
+      set({ categories: res.data.categories.categories })
     } catch (error) {
       throw error;
     }
@@ -241,9 +243,19 @@ export const useVideo = create((set, get) => ({
   getAllTags: async () => {
     try {
       const res = await axios.get(`${BASE_URL}/get-tags`);
-      set({tags:res.data.tagslist})
+      set({ tags: res.data.tagslist })
     } catch (error) {
       throw error;
     }
+  },
+  setDropDownIndex(index) {
+    set({
+      homeDropDownInex: index
+    })
   }
+}),{
+  name:"mywatchlist-store",
+  partialize: state => ({
+    homeDropDownInex: state.homeDropDownInex,
+  })
 }));
