@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
 import { useVideo } from "../../store/VideoStore";
 
-const list = [
-  "recent",
-  "oldest",
-  "by date ascending",
-  "by date descending",
-  "short duration",
-  "large duration"
-];
-
 function HomeLeft() {
-  const { library, setDropDownIndex, homeDropDownInex } = useVideo((state) => ({
+  const {
+    library,
+    setDropDownIndex,
+    homeDropDownInex,
+    sortingHomeData,
+    homeDropDownList
+  } = useVideo((state) => ({
     library: state.library,
     setDropDownIndex: state.setDropDownIndex,
-    homeDropDownInex: state.homeDropDownInex
+    homeDropDownInex: state.homeDropDownInex,
+    sortingHomeData: state.sortingHomeData,
+    homeDropDownList: state.homeDropDownList
   }));
+
+  useEffect(() => {
+    sortingHomeData();
+  }, [homeDropDownInex, sortingHomeData]);
+
   return (
     <div className="h-full w-[50%] gap-[10px] flex flex-col">
       <div className="flex justify-between items-center">
@@ -28,9 +32,13 @@ function HomeLeft() {
           value={homeDropDownInex}
           className="text-white bg-[#111827] text-[14px] font-[500] outline-none w-[200px] py-[3px] rounded-[5px] px-[5px]"
         >
-          {list.map((item, index) => {
+          {homeDropDownList.map((item, index) => {
             return (
-              <option className="font-[500] cursor-pointer" value={index} key={index}>
+              <option
+                className="font-[500] cursor-pointer"
+                value={index}
+                key={index}
+              >
                 {item}
               </option>
             );

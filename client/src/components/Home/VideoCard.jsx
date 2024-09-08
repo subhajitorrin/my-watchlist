@@ -67,7 +67,10 @@ function VideoCard({ item }) {
         <div className="flex gap-[7px]">
           {item.tags.map((item, index) => {
             return (
-              <div className="text-[11px] bg-[#374f86] inline-block rounded-[5px] px-[7px] py-[2px]">
+              <div
+                key={index}
+                className="text-[11px] bg-[#374f86] inline-block rounded-[5px] px-[7px] py-[2px]"
+              >
                 {item}
               </div>
             );

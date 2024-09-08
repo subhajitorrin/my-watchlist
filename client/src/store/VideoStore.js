@@ -15,7 +15,15 @@ export const useVideo = create(
       isLoading: false,
       currnetVideo: null,
       currentProgress: null,
-      homeDropDownInex: null,
+      homeDropDownInex: 0,
+      homeDropDownList: [
+        "recent",
+        "oldest",
+        "by date ascending",
+        "by date descending",
+        "short duration",
+        "large duration"
+      ],
       addVideoToLibrary: async (url) => {
         set({ isLoading: true });
         try {
@@ -264,6 +272,12 @@ export const useVideo = create(
         set({
           homeDropDownInex: index
         });
+      },
+      sortingHomeData: async () => {
+        const index = get().homeDropDownInex;
+        if (index !== null) {
+          console.log(index);
+        }
       }
     }),
     {
