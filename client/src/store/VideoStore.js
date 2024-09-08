@@ -247,6 +247,9 @@ export const useVideo = create(
         set({
           homeDropDownValue: index
         });
+      },
+      searchVideo:async(query)=>{
+        
       }
     }),
     {
