@@ -10,6 +10,7 @@ function Collection() {
       getAllCategories: state.getAllCategories,
       categories: state.categories,
       getAllTags: state.getAllTags,
+      tags: state.tags,
     }));
   const container = useRef(null);
 
