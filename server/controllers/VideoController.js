@@ -492,11 +492,10 @@ async function getAllTags(req, res) {
 }
 
 async function searchVideo(req, res) {
-  const useid = req.id;
+  const userid = req.id;
   const { searchQuery } = req.query;
-  const user = await UserModel.findById(userid);
-  if (!user)
-    return res.status(400).json({ message: "User not found!", success: false });
+
+
   console.log(searchQuery);
   res
     .status(200)
