@@ -7,9 +7,10 @@ import { useLocation, Link } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
-  const { logout, isLoading, user } = useUser((state)=>({
-    logout:state.logout,
-    isLoading:state.isLoading,
+  const { logout, isLoading, user } = useUser((state) => ({
+    logout: state.logout,
+    isLoading: state.isLoading,
+    user: state.user
   }));
   const [search, setSearch] = useState("");
 
