@@ -274,10 +274,16 @@ export const useVideo = create(
         });
       },
       sortingHomeData: async () => {
-        const index = get().homeDropDownInex;
-        if (index !== null) {
-          console.log(index);
+        const homeDropDownInex = get().homeDropDownInex;
+        const homeDropDownList = get().homeDropDownList;
+        if (
+          !(homeDropDownInex >= 0 && homeDropDownInex < homeDropDownList.length)
+        ) {
+          return;
         }
+
+        
+
       }
     }),
     {
