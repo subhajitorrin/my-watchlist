@@ -495,8 +495,16 @@ async function searchVideo(req, res) {
   const userid = req.id;
   const { searchQuery } = req.query;
 
+  let videos = await UserModel.findById(userid)
+    .select("videos")
+    .populate("videos");
+  const refinedVideoData = videos.videos.map((item) => ({
+    id: item._id.toString(),
+    title: item.title,
+    tags: item.tags
+  }));
 
-  console.log(searchQuery);
+  console.log(refinedVideoData);
   res
     .status(200)
     .json({ message: "Search result", success: true, list: searchQuery });
