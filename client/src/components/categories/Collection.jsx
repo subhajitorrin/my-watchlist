@@ -11,6 +11,7 @@ function Collection() {
       categories: state.categories,
       getAllTags: state.getAllTags,
       tags: state.tags,
+      searchQuery: state.searchQuery
     }));
   const container = useRef(null);
 
