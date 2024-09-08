@@ -1,25 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import VideoCard from "./VideoCard";
 import { useVideo } from "../../store/VideoStore";
 
 function HomeLeft() {
-  const {
-    library,
-    setDropDownIndex,
-    homeDropDownInex,
-    sortingHomeData,
-    homeDropDownList
-  } = useVideo((state) => ({
-    library: state.library,
-    setDropDownIndex: state.setDropDownIndex,
-    homeDropDownInex: state.homeDropDownInex,
-    sortingHomeData: state.sortingHomeData,
-    homeDropDownList: state.homeDropDownList
-  }));
-
-  useEffect(() => {
-    sortingHomeData();
-  }, [homeDropDownInex, sortingHomeData]);
+  const { library, setDropDownIndex, homeDropDownInex, homeDropDownList } =
+    useVideo((state) => ({
+      library: state.library,
+      setDropDownIndex: state.setDropDownIndex,
+      homeDropDownInex: state.homeDropDownInex,
+      homeDropDownList: state.homeDropDownList
+    }));
 
   return (
     <div className="h-full w-[50%] gap-[10px] flex flex-col">

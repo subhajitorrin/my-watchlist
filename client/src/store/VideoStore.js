@@ -17,13 +17,14 @@ export const useVideo = create(
       currentProgress: null,
       homeDropDownInex: 0,
       homeDropDownList: [
-        "recent",
-        "oldest",
-        "by date ascending",
-        "by date descending",
-        "short duration",
-        "large duration"
+        { value: "recent", name: "Recent" },
+        { value: "oldest", name: "Oldest" },
+        { value: "by-date-ascending", name: "By Date Ascending" },
+        { value: "by-date-descending", name: "By Date Descending" },
+        { value: "short-duration", name: "Short Duration" },
+        { value: "large-duration", name: "Large Duration" }
       ],
+
       addVideoToLibrary: async (url) => {
         set({ isLoading: true });
         try {
@@ -33,13 +34,6 @@ export const useVideo = create(
           set((prev) => ({
             library: [res.data.video, ...prev.library]
           }));
-          const libraryFromSession = get().getLibraryFromSession();
-          if (libraryFromSession !== null) {
-            const updatedSession = [res.data.video, ...libraryFromSession];
-            sessionStorage.setItem("library", JSON.stringify(updatedSession));
-          } else {
-            sessionStorage.setItem("library", JSON.stringify(res.data.video));
-          }
         } catch (error) {
           throw error;
         } finally {
@@ -49,22 +43,11 @@ export const useVideo = create(
       getLibrary: async () => {
         const homeDropDownInex = get().homeDropDownInex;
         const homeDropDownList = get().homeDropDownList;
-        if (
-          !(homeDropDownInex >= 0 && homeDropDownInex < homeDropDownList.length)
-        ) {
-          return;
-        }
         set({ isLoading: true });
         try {
-          const libraryFromSession = get().getLibraryFromSession();
-          if (libraryFromSession !== null) {
-            set({ library: libraryFromSession });
-          } else {
-            const res = await axios.get(`${BASE_URL}/get-library`);
-            const lib = res.data.library;
-            set({ library: lib });
-            sessionStorage.setItem("library", JSON.stringify(lib));
-          }
+          const res = await axios.get(`${BASE_URL}/get-library`);
+          const lib = res.data.library;
+          set({ library: lib });
         } catch (error) {
           throw error;
         } finally {
@@ -93,10 +76,6 @@ export const useVideo = create(
       clearLibrary: () => {
         set({ library: [] });
       },
-      getLibraryFromSession: () => {
-        const storedData = sessionStorage.getItem("library");
-        return storedData ? JSON.parse(storedData) : null;
-      },
       getQueueFromSession: () => {
         const storedData = sessionStorage.getItem("queue");
         return storedData ? JSON.parse(storedData) : null;
@@ -124,21 +103,6 @@ export const useVideo = create(
       deleteVideo: async (id) => {
         try {
           const res = await axios.put(`${BASE_URL}/delete-video/${id}`);
-          const libraryFromSession = get().getLibraryFromSession();
-          if (libraryFromSession) {
-            const updatedSession = libraryFromSession.filter(
-              (item) => item._id !== id
-            );
-            set({ library: updatedSession });
-            sessionStorage.setItem("library", JSON.stringify(updatedSession));
-          } else {
-            const tempLibrary = get().library;
-            const updatedSession = tempLibrary.filter(
-              (item) => item._id !== id
-            );
-            set({ library: updatedSession });
-            sessionStorage.setItem("library", JSON.stringify(updatedSession));
-          }
         } catch (error) {
           throw error;
         }
@@ -284,7 +248,8 @@ export const useVideo = create(
     {
       name: "mywatchlist-store",
       partialize: (state) => ({
-        homeDropDownInex: state.homeDropDownInex
+        homeDropDownInex: state.homeDropDownInex,
+        library: state.library
       }),
       getStorage: () => sessionStorage
     }
