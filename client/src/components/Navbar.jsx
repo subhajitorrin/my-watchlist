@@ -9,7 +9,7 @@ function Navbar() {
   const location = useLocation();
   const { logout, isLoading, user } = useUser((state)=>({
     logout:state.logout,
-    
+    isLoading:state.isLoading,
   }));
   const [search, setSearch] = useState("");
 
