@@ -35,6 +35,7 @@ export const useVideo = create(
           set((prev) => ({
             library: [res.data.video, ...prev.library]
           }));
+          set({ homeDropDownValue: "recent" });
         } catch (error) {
           throw error;
         } finally {
