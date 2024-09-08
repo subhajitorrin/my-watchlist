@@ -56,8 +56,8 @@ function Navbar() {
           <input
             onChange={(e) => {
               const inputValue = e.target.value.trim();
-              setSearch(inputValue);
               setIsActiveSearch(inputValue !== "");
+              setSearch(inputValue);
             }}
             type="text"
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"

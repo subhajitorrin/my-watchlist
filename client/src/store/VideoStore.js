@@ -260,7 +260,6 @@ export const useVideo = create(
             }
           });
           set({ searchedList: res.data.list });
-          console.log(res.data.list);
         } catch (error) {
           console.log(error);
           throw error;
