@@ -198,10 +198,14 @@ async function getLibrary(req, res) {
           (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
         );
         break;
-      case "oldest":
-        filteredList = library.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        );
+      case "today":
+        const today = new Date();
+        const date = `${today.getDate().toString().padStart(2, "0")}-${today
+          .getMonth()
+          .toString()
+          .padStart(2, "0")}-${today.getFullYear()}`;
+        console.log(date);
+        // filteredList = library.filter((item) => item.createdAt === today);
         break;
       default:
         [];
