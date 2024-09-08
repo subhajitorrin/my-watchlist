@@ -22,7 +22,7 @@ function Search() {
         </div>
       ) : (
         <div className="max-h-[80vh] flex flex-col gap-[10px] overflow-y-auto scrollNone">
-          {library.map((item, index) => {
+          {searchedList.map((item, index) => {
             return <SearchCard key={index} item={item} />;
           })}
         </div>
