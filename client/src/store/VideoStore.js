@@ -104,6 +104,9 @@ export const useVideo = create(
       deleteVideo: async (id) => {
         try {
           const res = await axios.put(`${BASE_URL}/delete-video/${id}`);
+          set((state) => ({
+            library: state.library.filter((item) => item._id !== id)
+          }));
         } catch (error) {
           throw error;
         }
