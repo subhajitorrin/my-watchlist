@@ -26,10 +26,10 @@ function HomeLeft() {
             return (
               <option
                 className="font-[500] cursor-pointer"
-                value={index}
+                value={item.value}
                 key={index}
               >
-                {item}
+                {item.name}
               </option>
             );
           })}
