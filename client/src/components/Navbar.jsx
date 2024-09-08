@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { useUser } from "../store/UserStore";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import { useLocation, Link } from "react-router-dom";
 function Navbar() {
   const location = useLocation();
   const { logout, isLoading, user } = useUser();
+  const [search, setSearch] = useState("");
 
   const handleLogout = async () => {
     try {
