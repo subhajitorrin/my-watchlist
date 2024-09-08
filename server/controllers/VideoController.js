@@ -199,13 +199,13 @@ async function getLibrary(req, res) {
         );
         break;
       case "today":
-        const today = new Date();
-        const date = `${today.getDate().toString().padStart(2, "0")}-${today
-          .getMonth()
-          .toString()
-          .padStart(2, "0")}-${today.getFullYear()}`;
-        console.log(date);
-        // filteredList = library.filter((item) => item.createdAt === today);
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999);
+        filteredList = library.filter(
+          (item) => item.createdAt >= startOfDay && item.createdAt <= endOfDay
+        );
         break;
       default:
         [];
