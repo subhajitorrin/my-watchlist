@@ -25,6 +25,7 @@ export const useVideo = create(
         { value: "large-duration", name: "Large Duration" }
       ],
       homeDropDownValue: "recent",
+      searchQuery: "",
 
       addVideoToLibrary: async (url) => {
         set({ isLoading: true });
@@ -249,6 +250,7 @@ export const useVideo = create(
         });
       },
       searchVideo: async (query) => {
+        set({ searchQuery: query });
         console.log(query);
       }
     }),

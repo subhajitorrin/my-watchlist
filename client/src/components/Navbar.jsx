@@ -16,14 +16,6 @@ function Navbar() {
   const { searchVideo } = useVideo((state) => ({
     searchVideo: state.searchVideo
   }));
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    async function handleSearchVideo() {
-      await searchVideo(search);
-    }
-    handleSearchVideo();
-  }, [search]);
 
   const handleLogout = async () => {
     try {
@@ -48,7 +40,7 @@ function Navbar() {
         <div>
           <input
             onChange={(e) => {
-              setSearch(e.target.value);
+              searchVideo(e.target.value.trim());
             }}
             type="text"
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"
