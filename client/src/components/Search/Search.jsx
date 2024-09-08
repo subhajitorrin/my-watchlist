@@ -2,15 +2,17 @@ import React from "react";
 import { useVideo } from "../../store/VideoStore";
 import { SyncLoader } from "react-spinners";
 import { CgSearch } from "react-icons/cg";
+import SearchCard from "./SearchCard";
 
 function Search() {
-  const { searchLoading, searchedList } = useVideo((state) => ({
+  const { searchLoading, searchedList, library } = useVideo((state) => ({
     searchLoading: state.searchLoading,
-    searchedList: state.searchedList
+    searchedList: state.searchedList,
+    library: state.library
   }));
   return (
     <div className="absolute  w-full bg-[rgb(10,10,10)] z-[12] rounded-[7px]">
-      {!searchLoading ? (
+      {searchLoading ? (
         <div className=" h-[200px] flex flex-col gap-[20px] items-center justify-center">
           <SyncLoader color="#ffffff" size={5} />
           <p className="text-[13px] font-[500] flex items-center gap-[3px]">
@@ -18,7 +20,11 @@ function Search() {
           </p>
         </div>
       ) : (
-        <></>
+        <div className="">
+          {library.map((item, index) => {
+            return <SearchCard key={index} item={item} />;
+          })}
+        </div>
       )}
     </div>
   );
