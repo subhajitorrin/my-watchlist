@@ -498,8 +498,9 @@ async function searchVideo(req, res) {
   let videos = await UserModel.findById(userid)
     .select("videos")
     .populate("videos");
+  videos = videos.videos;
 
-  const refinedVideoData = videos.videos.map((item) => ({
+  const refinedVideoData = videos.map((item) => ({
     id: item._id.toString(),
     title: item.title,
     tags: item.tags
@@ -510,13 +511,16 @@ async function searchVideo(req, res) {
     refinedVideoData
   );
 
+  const resultList = videos.filter((video) =>
+    resultedIDList.includes(video._id.toString())
+  );
+
   res
     .status(200)
-    .json({ message: "Search result", success: true, list: resultedIDList });
+    .json({ message: "Search result", success: true, list: resultList });
 }
 
 async function getSearchAnalyzeByAi(searchQuery, videoData) {
-
   const videoDataJson = JSON.stringify(videoData);
 
   const prompt = `Please analyze the provided video data (in JSON format) and the search query: "${searchQuery}". Identify the videos where the title or tags are relevant to the search query. Return only the video IDs in a comma-separated format, without any additional text. The video data is as follows: ${videoDataJson}.`;
@@ -524,7 +528,8 @@ async function getSearchAnalyzeByAi(searchQuery, videoData) {
   try {
     const res = await model.generateContent(prompt);
     let result = await res.response.text();
-    console.log(result);
+    const idsArr = result.trim().split(",");
+    return idsArr;
   } catch (error) {
     console.log(error);
     return null;
