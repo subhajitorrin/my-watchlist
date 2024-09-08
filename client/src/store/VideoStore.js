@@ -45,7 +45,6 @@ export const useVideo = create(
       },
       getLibrary: async () => {
         const homeDropDownValue = get().homeDropDownValue;
-        console.log(homeDropDownValue);
 
         set({ isLoading: true });
         try {

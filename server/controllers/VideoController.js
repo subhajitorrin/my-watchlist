@@ -207,6 +207,19 @@ async function getLibrary(req, res) {
           (item) => item.createdAt >= startOfDay && item.createdAt <= endOfDay
         );
         break;
+      case "yesterday":
+        const startOfYesterday = new Date();
+        startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+        startOfYesterday.setHours(0, 0, 0, 0);
+        const endOfYesterday = new Date();
+        endOfYesterday.setDate(endOfYesterday.getDate() - 1);
+        endOfYesterday.setHours(23, 59, 59, 999);
+        filteredList = library.filter(
+          (item) =>
+            item.createdAt >= startOfYesterday &&
+            item.createdAt <= endOfYesterday
+        );
+        break;
       default:
         [];
     }
