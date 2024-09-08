@@ -35,7 +35,7 @@ function SearchCard({ item }) {
   }
 
   return (
-    <div className=" flex gap-[10px] rounded-[7px] min-h-[150px] w-full bg-[#111827] p-[10px]">
+    <div className=" flex gap-[10px] rounded-[7px]  w-full bg-[#111827] p-[10px]">
       <div className="h-full w-[35%]">
         <img
           className="h-full w-full object-cover rounded-[7px]"
