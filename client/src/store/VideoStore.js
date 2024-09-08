@@ -26,6 +26,7 @@ export const useVideo = create(
       ],
       homeDropDownValue: "recent",
       searchQuery: "",
+      searchedList: [],
 
       addVideoToLibrary: async (url) => {
         set({ isLoading: true });
@@ -251,11 +252,17 @@ export const useVideo = create(
       },
       searchVideo: async (query) => {
         set({ searchQuery: query });
-        const res = await axios.get(`${BASE_URL}/search-video`, {
-          params: {
-            searchQuery: query
-          }
-        });
+        try {
+          const res = await axios.get(`${BASE_URL}/search-video`, {
+            params: {
+              searchQuery: query
+            }
+          });
+          set({ searchedList: res.data.list });
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
       }
     }),
     {
