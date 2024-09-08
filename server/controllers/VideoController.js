@@ -491,10 +491,11 @@ async function getAllTags(req, res) {
   }
 }
 
-async function searchVideo(req,res){
-  
+async function searchVideo(req, res) {
+  const useid = req.id;
+  const { searchQuery } = req.query;
+  console.log(searchQuery);
 }
-
 
 export {
   addVideoToLibrary,

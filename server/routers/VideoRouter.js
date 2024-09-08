@@ -11,7 +11,8 @@ import {
   revertFromQueueToLibrary,
   updateProgress,
   getCategories,
-  getAllTags
+  getAllTags,
+  searchVideo
 } from "../controllers/VideoController.js";
 const VideoRouter = express.Router();
 VideoRouter.post("/add-video-to-library", authToken, addVideoToLibrary);
@@ -29,5 +30,6 @@ VideoRouter.put(
 );
 VideoRouter.get("/get-categories", authToken, getCategories);
 VideoRouter.get("/get-tags", authToken, getAllTags);
+VideoRouter.get("/search-video", authToken, searchVideo);
 
 export default VideoRouter;

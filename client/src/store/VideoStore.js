@@ -251,7 +251,11 @@ export const useVideo = create(
       },
       searchVideo: async (query) => {
         set({ searchQuery: query });
-        console.log(query);
+        const res = await axios.get(`${BASE_URL}/search-video`, {
+          params: {
+            searchQuery: query
+          }
+        });
       }
     }),
     {
