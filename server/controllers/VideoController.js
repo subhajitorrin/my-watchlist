@@ -231,6 +231,10 @@ async function getLibrary(req, res) {
             item.createdAt <= endtOfLastDay3
         );
         break;
+      case "short-duration":
+        filteredList = library.sort((a, b) => a.duration - b.duration);
+        break;
+     
       default:
         [];
     }

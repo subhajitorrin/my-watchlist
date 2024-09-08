@@ -21,8 +21,6 @@ export const useVideo = create(
         { value: "today", name: "Today" },
         { value: "yesterday", name: "Yesterday" },
         { value: "last-3-days-ago", name: "Last 3 days ago" },
-        { value: "this-week", name: "This week" },
-        { value: "this-month", name: "This month" },
         { value: "short-duration", name: "Short Duration" },
         { value: "large-duration", name: "Large Duration" }
       ],
@@ -45,8 +43,6 @@ export const useVideo = create(
       },
       getLibrary: async () => {
         const homeDropDownValue = get().homeDropDownValue;
-
-        set({ isLoading: true });
         try {
           const res = await axios.get(`${BASE_URL}/get-library`, {
             params: {
@@ -56,8 +52,6 @@ export const useVideo = create(
           set({ library: res.data.library });
         } catch (error) {
           throw error;
-        } finally {
-          set({ isLoading: false });
         }
       },
       formatTime: (seconds) => {
