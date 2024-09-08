@@ -16,13 +16,13 @@ function Navbar() {
     isLoading: state.isLoading,
     user: state.user
   }));
-  const { searchVideo, searchQuery, setIsActiveSearch, isActiveSearch } =
-    useVideo((state) => ({
+  const { searchVideo, setIsActiveSearch, isActiveSearch } = useVideo(
+    (state) => ({
       searchVideo: state.searchVideo,
-      searchQuery: state.searchQuery,
       setIsActiveSearch: state.setIsActiveSearch,
       isActiveSearch: state.isActiveSearch
-    }));
+    })
+  );
   const debouncedSearch = useDebounce(search);
 
   const handleLogout = async () => {

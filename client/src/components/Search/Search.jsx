@@ -6,10 +6,9 @@ import SearchCard from "./SearchCard";
 import VideoCard from "../Home/VideoCard";
 
 function Search() {
-  const { searchLoading, searchedList, library } = useVideo((state) => ({
+  const { searchLoading, searchedList } = useVideo((state) => ({
     searchLoading: state.searchLoading,
-    searchedList: state.searchedList,
-    library: state.library
+    searchedList: state.searchedList
   }));
   return (
     <div className="p-[10px] absolute  w-full bg-[rgb(10,10,10)] z-[12] rounded-[7px]">
