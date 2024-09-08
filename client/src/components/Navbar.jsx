@@ -7,20 +7,19 @@ import { useLocation, Link } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
-  const { logout, isLoading, user, searchVideo } = useUser((state) => ({
+  const { logout, isLoading, user } = useUser((state) => ({
     logout: state.logout,
     isLoading: state.isLoading,
-    user: state.user,
-    searchVideo: state.searchVideo
+    user: state.user
   }));
   const [search, setSearch] = useState("");
 
-  useEffect(()=>{
-    async function handleSearchVideo(){
-      
+  useEffect(() => {
+    async function handleSearchVideo() {
+      await searchVideo(search);
     }
-    if(search!=="")handleSearchVideo()
-  },[search])
+    if (search !== "") handleSearchVideo();
+  }, [search]);
 
   const handleLogout = async () => {
     try {

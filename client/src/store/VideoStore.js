@@ -248,8 +248,8 @@ export const useVideo = create(
           homeDropDownValue: index
         });
       },
-      searchVideo:async(query)=>{
-        
+      searchVideo: async (query) => {
+        console.log(query);
       }
     }),
     {
