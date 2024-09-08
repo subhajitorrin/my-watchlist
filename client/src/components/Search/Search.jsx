@@ -3,11 +3,10 @@ import { useVideo } from "../../store/VideoStore";
 import { SyncLoader } from "react-spinners";
 import { CgSearch } from "react-icons/cg";
 import SearchCard from "./SearchCard";
-import VideoCard from "../Home/VideoCard";
+import { IoMdSearch } from "react-icons/io";
 
 function Search() {
-  const { searchLoading, searchedList } = useVideo((state) => ({
-    searchLoading: state.searchLoading,
+  const { searchedList } = useVideo((state) => ({
     searchedList: state.searchedList
   }));
   return (
