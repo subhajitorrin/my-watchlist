@@ -491,6 +491,10 @@ async function getAllTags(req, res) {
   }
 }
 
+async function searchVideo(req,res){
+  
+}
+
 
 export {
   addVideoToLibrary,
@@ -504,4 +508,5 @@ export {
   getPlayback,
   getCategories,
   getAllTags,
+  searchVideo
 };

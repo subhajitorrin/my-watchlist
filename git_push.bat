@@ -3,6 +3,6 @@ cd /d "%~dp0"
 
 git add .
 
-git commit -m "updates on backend filtering..."
+git commit -m "working on search functionality.."
 
 git push -u origin main
