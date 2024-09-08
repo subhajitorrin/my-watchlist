@@ -36,6 +36,9 @@ function Navbar() {
       {location.pathname === "/collection" && (
         <div>
           <input
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
             type="text"
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"
             placeholder="Search collection or video"
