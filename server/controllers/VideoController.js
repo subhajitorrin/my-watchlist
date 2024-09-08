@@ -190,9 +190,13 @@ async function getLibrary(req, res) {
     switch (filterOption) {
       case "recent":
         {
-          filteredList
+          filteredList = library.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
         }
         break;
+      default:
+        [];
     }
 
     return res.status(200).json({
