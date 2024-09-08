@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
 import { useVideo } from "../../store/VideoStore";
 
 function HomeLeft() {
-  const { library, setDropDownIndex, homeDropDownInex, homeDropDownList } =
-    useVideo((state) => ({
-      library: state.library,
-      setDropDownIndex: state.setDropDownIndex,
-      homeDropDownInex: state.homeDropDownInex,
-      homeDropDownList: state.homeDropDownList
-    }));
+  const {
+    library,
+    setDropDownIndex,
+    homeDropDownValue,
+    homeDropDownList,
+    getLibrary
+  } = useVideo((state) => ({
+    library: state.library,
+    setDropDownIndex: state.setDropDownIndex,
+    homeDropDownValue: state.homeDropDownValue,
+    homeDropDownList: state.homeDropDownList,
+    getLibrary: state.getLibrary
+  }));
+
+  useEffect(() => {
+    getLibrary();
+  }, [homeDropDownValue]);
 
   return (
     <div className="h-full w-[50%] gap-[10px] flex flex-col">
@@ -19,7 +29,7 @@ function HomeLeft() {
           onChange={(e) => {
             setDropDownIndex(e.target.value);
           }}
-          value={homeDropDownInex}
+          value={homeDropDownValue}
           className="text-white bg-[#111827] text-[14px] font-[500] outline-none w-[200px] py-[3px] rounded-[5px] px-[5px]"
         >
           {homeDropDownList.map((item, index) => {

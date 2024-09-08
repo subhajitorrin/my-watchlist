@@ -170,7 +170,7 @@ async function addVideoToLibrary(req, res) {
 
 async function getLibrary(req, res) {
   const userid = req.id;
-  const { filterIndex } = req.query;
+  const { filterOption } = req.query;
   try {
     let library = await UserModel.findById(userid)
       .select("videos")
@@ -184,7 +184,7 @@ async function getLibrary(req, res) {
         .json({ message: "Library not found!", success: false });
     }
 
-    console.log(filterIndex);
+    console.log(filterOption);
 
     return res.status(200).json({
       message: "Library fetched",

@@ -15,7 +15,6 @@ export const useVideo = create(
       isLoading: false,
       currnetVideo: null,
       currentProgress: null,
-      homeDropDownInex: 0,
       homeDropDownList: [
         { value: "recent", name: "Recent" },
         { value: "oldest", name: "Oldest" },
@@ -24,6 +23,7 @@ export const useVideo = create(
         { value: "short-duration", name: "Short Duration" },
         { value: "large-duration", name: "Large Duration" }
       ],
+      homeDropDownValue: "recent",
 
       addVideoToLibrary: async (url) => {
         set({ isLoading: true });
@@ -41,13 +41,17 @@ export const useVideo = create(
         }
       },
       getLibrary: async () => {
-        const homeDropDownInex = get().homeDropDownInex;
-        const homeDropDownList = get().homeDropDownList;
+        const homeDropDownValue = get().homeDropDownValue;
+        console.log(homeDropDownValue);
+
         set({ isLoading: true });
         try {
-          const res = await axios.get(`${BASE_URL}/get-library`);
-          const lib = res.data.library;
-          set({ library: lib });
+          const res = await axios.get(`${BASE_URL}/get-library`, {
+            params: {
+              filterOption: homeDropDownValue
+            }
+          });
+          set({ library: res.data.library });
         } catch (error) {
           throw error;
         } finally {
@@ -241,14 +245,14 @@ export const useVideo = create(
       },
       setDropDownIndex(index) {
         set({
-          homeDropDownInex: index
+          homeDropDownValue: index
         });
       }
     }),
     {
       name: "mywatchlist-store",
       partialize: (state) => ({
-        homeDropDownInex: state.homeDropDownInex,
+        homeDropDownValue: state.homeDropDownValue,
         library: state.library
       }),
       getStorage: () => sessionStorage
