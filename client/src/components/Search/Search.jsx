@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Search() {
-  return (
-    <div>Search</div>
-  )
+  return <div className="absolute h-full w-full bg-red-500 z-[12]"></div>;
 }
 
-export default Search
+export default Search;

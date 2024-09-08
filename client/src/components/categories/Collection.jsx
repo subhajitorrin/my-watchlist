@@ -3,6 +3,7 @@ import Navbar from "../Navbar";
 import { useVideo } from "../../store/VideoStore";
 import CategoryCard from "./CategoryCard";
 import { RiArrowDropLeftLine } from "react-icons/ri";
+import Search from "../Search/Search";
 
 function Collection() {
   const { getAllCategories, categories, getAllTags, tags, searchQuery } =
@@ -42,7 +43,7 @@ function Collection() {
   return (
     <>
       <Navbar />
-      <div className="">
+      <div className="relative">
         <div className="flex justify-center relative">
           <div
             onClick={slideLeft}

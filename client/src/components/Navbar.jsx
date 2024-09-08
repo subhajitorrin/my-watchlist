@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 import { useLocation, Link } from "react-router-dom";
 import { useVideo } from "../store/VideoStore";
+import Search from "./Search/Search";
 
 function Navbar() {
   const location = useLocation();
@@ -13,8 +14,9 @@ function Navbar() {
     isLoading: state.isLoading,
     user: state.user
   }));
-  const { searchVideo } = useVideo((state) => ({
-    searchVideo: state.searchVideo
+  const { searchVideo, searchQuery } = useVideo((state) => ({
+    searchVideo: state.searchVideo,
+    searchQuery: state.searchQuery
   }));
 
   const handleLogout = async () => {
@@ -37,7 +39,7 @@ function Navbar() {
 
       {/* Middle section (Search Bar only on /collection) */}
       {location.pathname === "/collection" && (
-        <div>
+        <div className="relative">
           <input
             onChange={(e) => {
               searchVideo(e.target.value.trim());
@@ -46,6 +48,7 @@ function Navbar() {
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"
             placeholder="Search collection or video"
           />
+          {searchQuery !== "" && <Search />}
         </div>
       )}
 
