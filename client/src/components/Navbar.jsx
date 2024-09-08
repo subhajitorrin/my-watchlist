@@ -16,11 +16,13 @@ function Navbar() {
     isLoading: state.isLoading,
     user: state.user
   }));
-  const { searchVideo, searchQuery, setIsActiveSearch } = useVideo((state) => ({
-    searchVideo: state.searchVideo,
-    searchQuery: state.searchQuery,
-    setIsActiveSearch: state.setIsActiveSearch
-  }));
+  const { searchVideo, searchQuery, setIsActiveSearch, isActiveSearch } =
+    useVideo((state) => ({
+      searchVideo: state.searchVideo,
+      searchQuery: state.searchQuery,
+      setIsActiveSearch: state.setIsActiveSearch,
+      isActiveSearch: state.isActiveSearch
+    }));
   const debouncedSearch = useDebounce(search);
 
   const handleLogout = async () => {
@@ -61,7 +63,7 @@ function Navbar() {
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"
             placeholder="Search collection or video"
           />
-          {searchQuery !== "" && <Search />}
+          {isActiveSearch && <Search />}
         </div>
       )}
 
