@@ -45,9 +45,9 @@ function SearchCard({ item }) {
       <div className="w-[75%] flex flex-col justify-between">
         <div className="">
           <h2 className="text-[14px] font-[500] text-[#ffffffba]">
-            {item.title.length > 115 ? (
+            {item.title.length > 70 ? (
               <>
-                {item.title.slice(0, 115)}
+                {item.title.slice(0, 70)}
                 <span>...</span>
               </>
             ) : (
@@ -63,19 +63,6 @@ function SearchCard({ item }) {
             </p>
           </div>
         </div>
-
-        {/* <div className="flex gap-[7px]">
-          {item.tags.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className="text-[11px] bg-[#374f86] inline-block rounded-[5px] px-[7px] py-[2px]"
-              >
-                {item}
-              </div>
-            );
-          })}
-        </div> */}
 
         <div className="flex gap-[7px] items-center ">
           <button
