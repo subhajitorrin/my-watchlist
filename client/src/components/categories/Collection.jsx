@@ -9,6 +9,7 @@ function Collection() {
     useVideo((state) => ({
       getAllCategories: state.getAllCategories,
       categories: state.categories,
+      getAllTags: state.getAllTags,
     }));
   const container = useRef(null);
 
