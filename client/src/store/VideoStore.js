@@ -47,6 +47,13 @@ export const useVideo = create(
         }
       },
       getLibrary: async () => {
+        const homeDropDownInex = get().homeDropDownInex;
+        const homeDropDownList = get().homeDropDownList;
+        if (
+          !(homeDropDownInex >= 0 && homeDropDownInex < homeDropDownList.length)
+        ) {
+          return;
+        }
         set({ isLoading: true });
         try {
           const libraryFromSession = get().getLibraryFromSession();
@@ -272,18 +279,6 @@ export const useVideo = create(
         set({
           homeDropDownInex: index
         });
-      },
-      sortingHomeData: async () => {
-        const homeDropDownInex = get().homeDropDownInex;
-        const homeDropDownList = get().homeDropDownList;
-        if (
-          !(homeDropDownInex >= 0 && homeDropDownInex < homeDropDownList.length)
-        ) {
-          return;
-        }
-
-        
-
       }
     }),
     {

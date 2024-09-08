@@ -51,7 +51,7 @@ async function AIgeneratedCategories(title, userid, videoId, tags) {
     user: userid
   }).select("name");
 
-  const existingCategoryNames = existingCategoryRes.map(item => item.name);
+  const existingCategoryNames = existingCategoryRes.map((item) => item.name);
 
   const prompt = `I have a video titled ${title} with tags "${tags.join(
     ","
@@ -170,16 +170,22 @@ async function addVideoToLibrary(req, res) {
 
 async function getLibrary(req, res) {
   const userid = req.id;
+  const { filterIndex } = req.query;
   try {
-    let library = await UserModel.findById(userid).select("videos").populate({
-      path: "videos",
-      options: { sort: { createdAt: -1 } }
-    });
+    let library = await UserModel.findById(userid)
+      .select("videos")
+      .populate({
+        path: "videos",
+        options: { sort: { createdAt: -1 } }
+      });
     if (!library) {
       return res
         .status(400)
         .json({ message: "Library not found!", success: false });
     }
+
+    console.log(filterIndex);
+
     return res.status(200).json({
       message: "Library fetched",
       success: true,
@@ -415,7 +421,7 @@ async function getAllTags(req, res) {
     const tagslist = await VideoModel.find({ user: userid })
       .select("tags")
       .exec();
-    const tags = tagslist.flatMap(item => item.tags);
+    const tags = tagslist.flatMap((item) => item.tags);
     const tagsSet = new Set(tags);
     res.status(200).json({
       message: "All tags feched",
@@ -430,6 +436,8 @@ async function getAllTags(req, res) {
   }
 }
 
+async function filterHomeData(req, res) {}
+
 export {
   addVideoToLibrary,
   getLibrary,
@@ -441,5 +449,6 @@ export {
   updateProgress,
   getPlayback,
   getCategories,
-  getAllTags
+  getAllTags,
+  filterHomeData
 };
