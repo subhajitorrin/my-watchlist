@@ -257,5 +257,6 @@ export const useVideo = create(persist((set, get) => ({
   name:"mywatchlist-store",
   partialize: state => ({
     homeDropDownInex: state.homeDropDownInex,
-  })
+  }),
+  getStorage: () => sessionStorage,
 }));
