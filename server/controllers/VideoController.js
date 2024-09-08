@@ -234,7 +234,9 @@ async function getLibrary(req, res) {
       case "short-duration":
         filteredList = library.sort((a, b) => a.duration - b.duration);
         break;
-     
+      case "large-duration":
+        filteredList = library.sort((a, b) => b.duration - a.duration);
+        break;
       default:
         [];
     }
