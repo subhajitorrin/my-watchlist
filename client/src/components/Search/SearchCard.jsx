@@ -44,7 +44,7 @@ function SearchCard({ item }) {
       </div>
       <div className="w-[75%] flex flex-col justify-between">
         <div className="">
-          <h2 className="text-[16px] font-[500] text-[#ffffffba]">
+          <h2 className="text-[14px] font-[500] text-[#ffffffba]">
             {item.title.length > 115 ? (
               <>
                 {item.title.slice(0, 115)}
@@ -54,7 +54,7 @@ function SearchCard({ item }) {
               item.title
             )}
           </h2>
-          <div className="flex gap-[10px]">
+          <div className="flex gap-[10px] my-[5px]">
             <p className="text-[13px] ">{formatTime(item.duration)}</p>
             <p className="text-[13px] text-[#ffffff96]">
               Added {getISTdate(item.createdAt)},{" "}
@@ -64,7 +64,7 @@ function SearchCard({ item }) {
           </div>
         </div>
 
-        <div className="flex gap-[7px]">
+        {/* <div className="flex gap-[7px]">
           {item.tags.map((item, index) => {
             return (
               <div
@@ -75,7 +75,7 @@ function SearchCard({ item }) {
               </div>
             );
           })}
-        </div>
+        </div> */}
 
         <div className="flex gap-[7px] items-center ">
           <button
