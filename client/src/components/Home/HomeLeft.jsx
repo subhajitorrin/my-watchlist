@@ -26,7 +26,7 @@ function HomeLeft() {
             setDropDownIndex(e.target.value);
           }}
           value={homeDropDownInex}
-          className="text-black text-[14px] font-[500] outline-none w-[200px] py-[3px] rounded-[5px] px-[5px]"
+          className="text-white bg-[#111827] text-[14px] font-[500] outline-none w-[200px] py-[3px] rounded-[5px] px-[5px]"
         >
           {list.map((item, index) => {
             return (
