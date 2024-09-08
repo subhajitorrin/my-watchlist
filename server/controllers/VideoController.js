@@ -183,13 +183,22 @@ async function getLibrary(req, res) {
         .status(400)
         .json({ message: "Library not found!", success: false });
     }
+    library = library.videos;
 
-    console.log(filterOption);
+    let filteredList = [];
+
+    switch (filterOption) {
+      case "recent":
+        {
+          filteredList
+        }
+        break;
+    }
 
     return res.status(200).json({
       message: "Library fetched",
       success: true,
-      library: library.videos.length > 0 ? library.videos : []
+      library: filteredList
     });
   } catch (error) {
     console.log(error);
