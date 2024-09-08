@@ -30,7 +30,7 @@ function HomeLeft() {
         >
           {list.map((item, index) => {
             return (
-              <option className="font-[500]" value={index} key={index}>
+              <option className="font-[500] cursor-pointer" value={index} key={index}>
                 {item}
               </option>
             );
