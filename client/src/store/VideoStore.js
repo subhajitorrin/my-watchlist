@@ -253,6 +253,7 @@ export const useVideo = create(
       },
       searchVideo: async (query) => {
         set({ searchLoading: true });
+        if (query === "") return;
         try {
           const res = await axios.get(`${BASE_URL}/search-video`, {
             params: {
