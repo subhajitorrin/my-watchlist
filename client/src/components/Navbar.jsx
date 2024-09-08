@@ -7,6 +7,7 @@ import { useLocation, Link } from "react-router-dom";
 import { useVideo } from "../store/VideoStore";
 import Search from "./Search/Search";
 import useDebounce from "../hook/useDebounce";
+import { RxCross2 } from "react-icons/rx";
 
 function Navbar() {
   const [search, setSearch] = useState("");
@@ -63,6 +64,8 @@ function Navbar() {
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"
             placeholder="Search collection or video"
           />
+          <IoMdSearch className="absolute top-[20%] right-[10px] text-[20px] text-[#ffffff8f]" />
+          <RxCross2 className="absolute top-[20%] right-[20px] text-[20px] text-[#ffffff8f]" />
           {isActiveSearch && <Search />}
         </div>
       )}

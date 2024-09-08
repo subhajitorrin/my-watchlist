@@ -3,7 +3,6 @@ import { useVideo } from "../../store/VideoStore";
 import { SyncLoader } from "react-spinners";
 import { CgSearch } from "react-icons/cg";
 import SearchCard from "./SearchCard";
-import { IoMdSearch } from "react-icons/io";
 
 function Search() {
   const { searchedList } = useVideo((state) => ({
