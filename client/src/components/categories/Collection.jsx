@@ -7,7 +7,8 @@ import { RiArrowDropLeftLine } from "react-icons/ri";
 function Collection() {
   const { getAllCategories, categories, getAllTags, tags, searchQuery } =
     useVideo((state) => ({
-      getAllCategories: state.getAllCategories
+      getAllCategories: state.getAllCategories,
+      categories: state.categories,
     }));
   const container = useRef(null);
 
