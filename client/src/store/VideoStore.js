@@ -25,7 +25,7 @@ export const useVideo = create(
         { value: "large-duration", name: "Large Duration" }
       ],
       homeDropDownValue: "recent",
-      searchQuery: "",
+      searchQuery: "a",
       searchedList: [],
       searchLoading: false,
 
