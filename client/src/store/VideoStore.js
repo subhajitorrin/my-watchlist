@@ -18,8 +18,11 @@ export const useVideo = create(
       homeDropDownList: [
         { value: "recent", name: "Recent" },
         { value: "oldest", name: "Oldest" },
-        { value: "by-date-ascending", name: "By Date Ascending" },
-        { value: "by-date-descending", name: "By Date Descending" },
+        { value: "today", name: "Today" },
+        { value: "yesterday", name: "Yesterday" },
+        { value: "last-3-days", name: "Last 3 days" },
+        { value: "this-week", name: "This week" },
+        { value: "this-month", name: "This month" },
         { value: "short-duration", name: "Short Duration" },
         { value: "large-duration", name: "Large Duration" }
       ],

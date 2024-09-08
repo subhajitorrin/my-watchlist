@@ -198,6 +198,11 @@ async function getLibrary(req, res) {
           (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
         );
         break;
+      case "oldest":
+        filteredList = library.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+        break;
       default:
         [];
     }
