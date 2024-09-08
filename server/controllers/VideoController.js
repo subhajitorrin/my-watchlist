@@ -495,29 +495,34 @@ async function searchVideo(req, res) {
   const userid = req.id;
   const { searchQuery } = req.query;
 
-  let videos = await UserModel.findById(userid)
-    .select("videos")
-    .populate("videos");
-  videos = videos.videos;
+  try {
+    let videos = await UserModel.findById(userid)
+      .select("videos")
+      .populate("videos");
+    videos = videos.videos;
 
-  const refinedVideoData = videos.map((item) => ({
-    id: item._id.toString(),
-    title: item.title,
-    tags: item.tags
-  }));
+    const refinedVideoData = videos.map((item) => ({
+      id: item._id.toString(),
+      title: item.title,
+      tags: item.tags
+    }));
 
-  const resultedIDList = await getSearchAnalyzeByAi(
-    searchQuery,
-    refinedVideoData
-  );
+    const resultedIDList = await getSearchAnalyzeByAi(
+      searchQuery,
+      refinedVideoData
+    );
 
-  const resultList = videos.filter((video) =>
-    resultedIDList.includes(video._id.toString())
-  );
+    const resultList = videos.filter((video) =>
+      resultedIDList.includes(video._id.toString())
+    );
 
-  res
-    .status(200)
-    .json({ message: "Search result", success: true, list: resultList });
+    res
+      .status(200)
+      .json({ message: "Search result", success: true, list: resultList });
+  } catch (error) {
+    console.log(error);
+    res.status(200).json({ message: "Error while searching", success: false });
+  }
 }
 
 async function getSearchAnalyzeByAi(searchQuery, videoData) {
