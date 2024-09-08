@@ -4,6 +4,7 @@ import { useUser } from "../store/UserStore";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 import { useLocation, Link } from "react-router-dom";
+import { useVideo } from "../store/VideoStore";
 
 function Navbar() {
   const location = useLocation();
@@ -12,6 +13,9 @@ function Navbar() {
     isLoading: state.isLoading,
     user: state.user
   }));
+  const {searchVideo} = useVideo((state)=>({
+    
+  }))
   const [search, setSearch] = useState("");
 
   useEffect(() => {
