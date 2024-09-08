@@ -5,7 +5,10 @@ import CategoryCard from "./CategoryCard";
 import { RiArrowDropLeftLine } from "react-icons/ri";
 
 function Collection() {
-  const { getAllCategories, categories, getAllTags, tags } = useVideo();
+  const { getAllCategories, categories, getAllTags, tags, searchQuery } =
+    useVideo((state) => ({
+      getAllCategories: state.getAllCategories
+    }));
   const container = useRef(null);
 
   useEffect(() => {
