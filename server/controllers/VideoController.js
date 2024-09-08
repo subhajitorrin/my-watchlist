@@ -491,7 +491,6 @@ async function getAllTags(req, res) {
   }
 }
 
-async function filterHomeData(req, res) {}
 
 export {
   addVideoToLibrary,
@@ -505,5 +504,4 @@ export {
   getPlayback,
   getCategories,
   getAllTags,
-  filterHomeData
 };
