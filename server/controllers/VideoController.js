@@ -220,6 +220,17 @@ async function getLibrary(req, res) {
             item.createdAt <= endOfYesterday
         );
         break;
+      case "last-3-days-ago":
+        const startOfLastDay3 = new Date();
+        startOfLastDay3.setDate(startOfLastDay3.getDate() - 2);
+        const endtOfLastDay3 = new Date();
+        endtOfLastDay3.setDate(startOfLastDay3.getDate() - 2);
+        filteredList = library.filter(
+          (item) =>
+            item.createdAt >= startOfLastDay3 &&
+            item.createdAt <= endtOfLastDay3
+        );
+        break;
       default:
         [];
     }

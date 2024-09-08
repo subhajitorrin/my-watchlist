@@ -20,7 +20,7 @@ export const useVideo = create(
         { value: "oldest", name: "Oldest" },
         { value: "today", name: "Today" },
         { value: "yesterday", name: "Yesterday" },
-        { value: "last-3-days", name: "Last 3 days" },
+        { value: "last-3-days-ago", name: "Last 3 days ago" },
         { value: "this-week", name: "This week" },
         { value: "this-month", name: "This month" },
         { value: "short-duration", name: "Short Duration" },
