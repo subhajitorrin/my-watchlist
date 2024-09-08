@@ -6,14 +6,14 @@ import { RiArrowDropLeftLine } from "react-icons/ri";
 import Search from "../Search/Search";
 
 function Collection() {
-  const { getAllCategories, categories, getAllTags, tags, searchQuery } =
-    useVideo((state) => ({
+  const { getAllCategories, categories, getAllTags, tags } = useVideo(
+    (state) => ({
       getAllCategories: state.getAllCategories,
       categories: state.categories,
       getAllTags: state.getAllTags,
-      tags: state.tags,
-      searchQuery: state.searchQuery
-    }));
+      tags: state.tags
+    })
+  );
   const container = useRef(null);
 
   useEffect(() => {
