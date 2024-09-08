@@ -13,16 +13,16 @@ function Navbar() {
     isLoading: state.isLoading,
     user: state.user
   }));
-  const {searchVideo} = useVideo((state)=>({
-    
-  }))
+  const { searchVideo } = useVideo((state) => ({
+    searchVideo: state.searchVideo
+  }));
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function handleSearchVideo() {
       await searchVideo(search);
     }
-    if (search !== "") handleSearchVideo();
+    handleSearchVideo();
   }, [search]);
 
   const handleLogout = async () => {
