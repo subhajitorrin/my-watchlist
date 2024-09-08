@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { useUser } from "../store/UserStore";
 import { toast } from "react-toastify";
@@ -7,12 +7,20 @@ import { useLocation, Link } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
-  const { logout, isLoading, user } = useUser((state) => ({
+  const { logout, isLoading, user, searchVideo } = useUser((state) => ({
     logout: state.logout,
     isLoading: state.isLoading,
-    user: state.user
+    user: state.user,
+    searchVideo: state.searchVideo
   }));
   const [search, setSearch] = useState("");
+
+  useEffect(()=>{
+    async function handleSearchVideo(){
+      
+    }
+    if(search!=="")handleSearchVideo()
+  },[search])
 
   const handleLogout = async () => {
     try {
