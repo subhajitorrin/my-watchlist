@@ -6,18 +6,22 @@ import { BeatLoader } from "react-spinners";
 import { useLocation, Link } from "react-router-dom";
 import { useVideo } from "../store/VideoStore";
 import Search from "./Search/Search";
+import useDebounce from "../hook/useDebounce";
 
 function Navbar() {
+  const [search, setSearch] = useState("");
   const location = useLocation();
   const { logout, isLoading, user } = useUser((state) => ({
     logout: state.logout,
     isLoading: state.isLoading,
     user: state.user
   }));
-  const { searchVideo, searchQuery } = useVideo((state) => ({
+  const { searchVideo, searchQuery, setIsActiveSearch } = useVideo((state) => ({
     searchVideo: state.searchVideo,
-    searchQuery: state.searchQuery
+    searchQuery: state.searchQuery,
+    setIsActiveSearch: state.setIsActiveSearch
   }));
+  const debouncedSearch = useDebounce(search);
 
   const handleLogout = async () => {
     try {
@@ -27,6 +31,13 @@ function Navbar() {
       toast.warn(error.response?.data?.message || error.message);
     }
   };
+
+  useEffect(() => {
+    async function handleSearch() {
+      await searchVideo(debouncedSearch);
+    }
+    handleSearch();
+  }, [debouncedSearch]);
 
   return (
     <nav className="flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
@@ -42,7 +53,9 @@ function Navbar() {
         <div className="relative">
           <input
             onChange={(e) => {
-              searchVideo(e.target.value.trim());
+              const inputValue = e.target.value.trim();
+              setSearch(inputValue);
+              setIsActiveSearch(inputValue !== "");
             }}
             type="text"
             className="text-[14px] font-[500] w-[500px] px-[20px] py-[7px] outline-none rounded-[7px] bg-[#111827]"

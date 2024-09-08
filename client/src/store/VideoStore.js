@@ -25,7 +25,7 @@ export const useVideo = create(
         { value: "large-duration", name: "Large Duration" }
       ],
       homeDropDownValue: "recent",
-      searchQuery: "a",
+      isActiveSearch: false,
       searchedList: [],
       searchLoading: false,
 
@@ -253,7 +253,6 @@ export const useVideo = create(
       },
       searchVideo: async (query) => {
         set({ searchLoading: true });
-        set({ searchQuery: query });
         try {
           const res = await axios.get(`${BASE_URL}/search-video`, {
             params: {
@@ -268,6 +267,9 @@ export const useVideo = create(
         } finally {
           set({ searchLoading: false });
         }
+      },
+      setIsActiveSearch: (value) => {
+        set({ isActiveSearch: value });
       }
     }),
     {
