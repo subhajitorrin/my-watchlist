@@ -35,7 +35,6 @@ function AddVideo() {
 
   if (isMobile) {
     <div className="flex flex-col gap-[10px]">
-      <h2 className="text-[20px] font-[500]">Add a video</h2>
       <div className="relative">
         <input
           onChange={(e) => {
