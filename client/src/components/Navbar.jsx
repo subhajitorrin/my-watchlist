@@ -81,14 +81,18 @@ function Navbar() {
               <div className="flex justify-center w-full">
                 <FaRegUser className="text-[25px]" />
               </div>
-              <span className="font-semibold text-center text-[18px]">
+              <span className="font-semibold text-center text-[20px]">
                 {user.name}
               </span>
             </div>
-            <div className="flex flex-col gap-[10px]">
+            <div className="flex flex-col gap-[20px] mt-[30%]">
               {navList.map((item, index) => {
                 return (
-                  <Link key={index} to={item.path}>
+                  <Link
+                    className="text-[18px] font-[500] text-center"
+                    key={index}
+                    to={item.path}
+                  >
                     {item.name}
                   </Link>
                 );
