@@ -34,8 +34,8 @@ function Navbar() {
       isActiveSearch: state.isActiveSearch
     })
   );
-  const { innerWidth } = useWidth((state) => ({
-    innerWidth: state.innerWidth
+  const { isMobile } = useWidth((state) => ({
+    isMobile: state.isMobile
   }));
   const debouncedSearch = useDebounce(search);
 
@@ -55,7 +55,7 @@ function Navbar() {
     handleSearch();
   }, [debouncedSearch]);
 
-  if (innerWidth < 768) {
+  if (isMobile) {
     return (
       <nav className="relative flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
         <h2 className="text-xl font-bold">
