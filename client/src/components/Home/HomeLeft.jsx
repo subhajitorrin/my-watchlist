@@ -27,7 +27,7 @@ function HomeLeft() {
 
   if (isMobile) {
     return (
-      <div className="h-full w-full gap-[10px] flex flex-col">
+      <div className="h-full w-full gap-[10px] flex flex-col pb-[100px]">
         <div className="flex justify-between items-center">
           <h2 className="text-[20px] font-[500]">My Library</h2>
           <select
