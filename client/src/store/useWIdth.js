@@ -1,7 +1,7 @@
 import { create } from "zustand";
 export const useWidth = create((set) => ({
-  innerWidth: window.innerWidth,
+  isMobile: window.innerWidth,
   setInnerWidth: (width) => {
-    set({ innerWidth: width });
+    set({ isMobile: width <= 768 ? true : false });
   }
 }));
