@@ -51,11 +51,11 @@ function Navbar() {
 
   if (innerWidth < 768) {
     return (
-      <nav className="flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
+      <nav className="relative flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
         <h2 className="text-xl font-bold">
           <Link to="/">MyWatchlist</Link>
         </h2>
-        <div className="">
+        <div className="relative">
           <RiMenu3Fill
             className="text-[22px] cursor-pointer"
             onClick={() => {
@@ -63,6 +63,9 @@ function Navbar() {
             }}
           />
         </div>
+        {toggleSideNavMobile && (
+          <div className="absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]"></div>
+        )}
       </nav>
     );
   }
