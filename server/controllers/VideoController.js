@@ -186,7 +186,6 @@ async function getLibrary(req, res) {
     library = library.videos;
 
     let filteredList = [];
-
     switch (filterOption) {
       case "recent":
         filteredList = library.sort(
@@ -240,7 +239,6 @@ async function getLibrary(req, res) {
       default:
         [];
     }
-
     return res.status(200).json({
       message: "Library fetched",
       success: true,

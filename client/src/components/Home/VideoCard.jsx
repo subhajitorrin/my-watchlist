@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { useVideo } from "../../store/VideoStore";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
+import { useWidth } from "../../store/useWIdth";
 
 function VideoCard({ item }) {
   const [deleteLoad, setDeleteLoad] = useState(false);
   const [addQueueLoad, setAddQueueLoad] = useState(false);
   const { formatTime, getISTdate, getISTtime, deleteVideo, addVideoToQueue } =
     useVideo();
+
+  const { isMobile } = useWidth((state) => ({
+    isMobile: state.isMobile
+  }));
 
   async function handleAddVideoToQueue() {
     setAddQueueLoad(true);
