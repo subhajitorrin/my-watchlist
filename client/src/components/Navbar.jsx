@@ -9,6 +9,7 @@ import Search from "./Search/Search";
 import useDebounce from "../hook/useDebounce";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdSearch } from "react-icons/io";
+import { useWidth } from "../store/useWIdth";
 
 function Navbar() {
   const [search, setSearch] = useState("");
@@ -25,6 +26,9 @@ function Navbar() {
       isActiveSearch: state.isActiveSearch
     })
   );
+  const { innerWidth } = useWidth((state) => ({
+    innerWidth: state.innerWidth
+  }));
   const debouncedSearch = useDebounce(search);
 
   const handleLogout = async () => {
@@ -42,6 +46,10 @@ function Navbar() {
     }
     handleSearch();
   }, [debouncedSearch]);
+
+  if (innerWidth < 768) {
+    return <></>;
+  }
 
   return (
     <nav className="flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
