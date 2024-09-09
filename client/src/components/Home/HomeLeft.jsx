@@ -40,7 +40,7 @@ function HomeLeft() {
             {homeDropDownList.map((item, index) => {
               return (
                 <option
-                  className="font-[500] cursor-pointer absolute"
+                  className="font-[500] cursor-pointer"
                   value={item.value}
                   key={index}
                 >
