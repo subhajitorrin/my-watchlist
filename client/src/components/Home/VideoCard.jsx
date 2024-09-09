@@ -48,7 +48,7 @@ function VideoCard({ item }) {
             src={item.thumbnail}
           />
         </div>
-        <div className="w-full flex flex-col justify-between">
+        <div className="w-full flex flex-col gap-[10px] justify-between">
           <div className="">
             <h2 className="text-[16px] font-[500] text-[#ffffffba]">
               {item.title.length > 75 ? (
@@ -65,7 +65,6 @@ function VideoCard({ item }) {
               <p className="text-[13px] text-[#ffffff96]">
                 Added {getISTdate(item.createdAt)},{" "}
                 <span>{getISTtime(item.createdAt)}</span>
-                {/* Added 05-09-2024, <span></span> */}
               </p>
             </div>
           </div>
