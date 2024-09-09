@@ -3,8 +3,12 @@ import { useVideo } from "../../store/VideoStore";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 import { MdContentPaste } from "react-icons/md";
+import { useWidth } from "../../store/useWIdth";
 
 function AddVideo() {
+  const { isMobile } = useWidth((state) => ({
+    isMobile: state.isMobile
+  }));
   const [url, seturl] = useState("");
   const { addVideoToLibrary, isLoading } = useVideo();
   async function handleAddVideo() {
