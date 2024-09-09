@@ -85,6 +85,15 @@ function Navbar() {
                 {user.name}
               </span>
             </div>
+            <div className="flex flex-col gap-[10px]">
+              {navList.map((item, index) => {
+                return (
+                  <Link key={index} to={item.path}>
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         )}
       </nav>
