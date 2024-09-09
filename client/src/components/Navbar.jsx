@@ -64,7 +64,14 @@ function Navbar() {
           />
         </div>
         {toggleSideNavMobile && (
-          <div className="absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]"></div>
+          <div className="absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]">
+            <RxCross2
+              className="text-[22px] cursor-pointer absolute right-[13px] top-[18px] "
+              onClick={() => {
+                setToggleSideNavMobile(false);
+              }}
+            />
+          </div>
         )}
       </nav>
     );
