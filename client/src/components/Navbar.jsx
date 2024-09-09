@@ -61,7 +61,7 @@ function Navbar() {
         <h2 className="text-xl font-bold">
           <Link to="/">MyWatchlist</Link>
         </h2>
-        <div className="relative">
+        <div className="relative flex gap-[10px] items-center">
           <RiMenu3Fill
             className="text-[22px] cursor-pointer"
             onClick={() => {
@@ -77,6 +77,10 @@ function Navbar() {
                 setToggleSideNavMobile(false);
               }}
             />
+            <div className="flex gap-[7px] items-center">
+              <span className="font-semibold">{user.name}</span>
+              <FaRegUser className="text-[20px]" />
+            </div>
           </div>
         )}
       </nav>
