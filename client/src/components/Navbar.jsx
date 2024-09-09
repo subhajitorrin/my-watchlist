@@ -54,7 +54,7 @@ function Navbar() {
         <h2 className="text-xl font-bold">
           <Link to="/">MyWatchlist</Link>
         </h2>
-        <RiMenu3Fill className="text-[22px] cursor-pointer"/>
+        <RiMenu3Fill className="text-[22px] cursor-pointer" />
       </nav>
     );
   }
