@@ -12,6 +12,12 @@ import { IoMdSearch } from "react-icons/io";
 import { useWidth } from "../store/useWIdth";
 import { RiMenu3Fill } from "react-icons/ri";
 
+const navList = [
+  { name: "Home", path: "/" },
+  { name: "Collection", path: "/collection" },
+  { name: "Queue", path: "/queue" }
+];
+
 function Navbar() {
   const [search, setSearch] = useState("");
   const [toggleSideNavMobile, setToggleSideNavMobile] = useState(false);
