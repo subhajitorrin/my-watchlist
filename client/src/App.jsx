@@ -29,7 +29,7 @@ function ProtectAuthenticatedRoutes({ children }) {
 
 function App() {
   const { isAuthChecking, getUser, user } = useUser();
-  const { getQueue, getLibrary, updateProgress, currnetVideo } = useVideo();
+  const { getQueue, getLibrary, setWidth } = useVideo();
 
   useEffect(() => {
     getUser();
@@ -46,6 +46,16 @@ function App() {
       getLibrary();
     }
   }, [user]);
+
+  useEffect(()=>{
+    function handleResize(e){
+      setWidth(e.target.innerWidth)
+    }
+    window.addEventListener("resize",handleResize)
+    return ()=>{
+      window.removeEventListener("resize",handleResize)
+    }
+  },[])
 
   if (isAuthChecking) return <div className="h-screen bg-[#0a0a0a]"></div>;
 
