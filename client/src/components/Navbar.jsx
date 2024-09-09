@@ -70,7 +70,7 @@ function Navbar() {
           />
         </div>
         {toggleSideNavMobile && (
-          <div className="pt-[15%] absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]">
+          <div className=" pt-[15%] absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]">
             <RxCross2
               className="text-[22px] cursor-pointer absolute right-[13px] top-[18px] "
               onClick={() => {
@@ -97,6 +97,15 @@ function Navbar() {
                   </Link>
                 );
               })}
+            </div>
+            <div className="px-[20px] absolute bottom-[20px] w-full">
+              <button
+                disabled={isLoading}
+                onClick={handleLogout}
+                className="bg-[#7e22ce] w-full hover:bg-[#6018a0] transition-all ease-linear duration-200 py-[5px] rounded-[5px]"
+              >
+                {isLoading ? <BeatLoader color="#ffffff" size={5} /> : "Logout"}
+              </button>
             </div>
           </div>
         )}
