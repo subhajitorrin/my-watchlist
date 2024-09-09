@@ -10,6 +10,7 @@ import useDebounce from "../hook/useDebounce";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdSearch } from "react-icons/io";
 import { useWidth } from "../store/useWIdth";
+import { RiMenu3Fill } from "react-icons/ri";
 
 function Navbar() {
   const [search, setSearch] = useState("");
@@ -48,7 +49,14 @@ function Navbar() {
   }, [debouncedSearch]);
 
   if (innerWidth < 768) {
-    return <></>;
+    return (
+      <nav className="flex items-center justify-between h-[60px] px-[3%] text-white border-b border-[#ffffff41]">
+        <h2 className="text-xl font-bold">
+          <Link to="/">MyWatchlist</Link>
+        </h2>
+        <RiMenu3Fill className="text-[22px] cursor-pointer"/>
+      </nav>
+    );
   }
 
   return (
