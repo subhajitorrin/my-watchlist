@@ -70,16 +70,20 @@ function Navbar() {
           />
         </div>
         {toggleSideNavMobile && (
-          <div className="absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]">
+          <div className="pt-[15%] absolute h-screen w-[60%] bg-[#111827] right-0 top-0 z-[10]">
             <RxCross2
               className="text-[22px] cursor-pointer absolute right-[13px] top-[18px] "
               onClick={() => {
                 setToggleSideNavMobile(false);
               }}
             />
-            <div className="flex gap-[7px] items-center">
-              <span className="font-semibold">{user.name}</span>
-              <FaRegUser className="text-[20px]" />
+            <div className="flex gap-[7px] items-center flex-col">
+              <div className="flex justify-center w-full">
+                <FaRegUser className="text-[25px]" />
+              </div>
+              <span className="font-semibold text-center text-[18px]">
+                {user.name}
+              </span>
             </div>
           </div>
         )}
