@@ -14,6 +14,7 @@ import { RiMenu3Fill } from "react-icons/ri";
 
 function Navbar() {
   const [search, setSearch] = useState("");
+  const [toggleSideNavMobile, setToggleSideNavMobile] = useState(false);
   const location = useLocation();
   const { logout, isLoading, user } = useUser((state) => ({
     logout: state.logout,
@@ -54,7 +55,14 @@ function Navbar() {
         <h2 className="text-xl font-bold">
           <Link to="/">MyWatchlist</Link>
         </h2>
-        <RiMenu3Fill className="text-[22px] cursor-pointer" />
+        <div className="">
+          <RiMenu3Fill
+            className="text-[22px] cursor-pointer"
+            onClick={() => {
+              setToggleSideNavMobile(true);
+            }}
+          />
+        </div>
       </nav>
     );
   }
