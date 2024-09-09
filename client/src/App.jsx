@@ -10,6 +10,7 @@ import Register from "./components/Authentication/Register";
 import Queue from "./components/Queue/Queue.jsx";
 import { useVideo } from "./store/VideoStore.js";
 import Collection from "./components/categories/Collection.jsx";
+import { useWidth } from "./store/useWIdth.js";
 
 function ProtectUnauthenticatedRoutes({ children }) {
   const { isAuthenticated } = useUser();
@@ -29,7 +30,8 @@ function ProtectAuthenticatedRoutes({ children }) {
 
 function App() {
   const { isAuthChecking, getUser, user } = useUser();
-  const { getQueue, getLibrary, setWidth } = useVideo();
+  const { getQueue, getLibrary } = useVideo();
+  const {setInnerWidth} = useWidth()
 
   useEffect(() => {
     getUser();
