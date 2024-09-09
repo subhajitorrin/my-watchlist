@@ -35,7 +35,7 @@ function AddVideo() {
 
   if (isMobile) {
     return (
-      <div className="flex flex-col gap-[10px]">
+      <div className="flex flex-col gap-[10px] mt-[25%]">
         <div className="relative">
           <input
             onChange={(e) => {
