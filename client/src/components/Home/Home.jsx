@@ -12,7 +12,7 @@ function Home() {
     <>
       <Navbar />
       <div
-        style={{ flexDirection: isMobile ? "" : "" }}
+        style={{ flexDirection: isMobile ? "column-reverse" : "row" }}
         className="h-[calc(100%-60px)] justify-center flex gap-[20px] px-[3%] py-[20px]"
       >
         <HomeLeft />
